@@ -80,22 +80,25 @@ The Secure Online Exam System is a backend-focused web application that securely
 
 ## 📂 Project Structure
 
-```
-Secure-Online-Exam-System
+```text
+Secure-Online-Exam-System/
 │
 ├── Controllers/
-├── Models/
-├── Routes/
 ├── Middleware/
+├── Models/
+├── Public/
+├── Routes/
 ├── Services/
+├── Storage/
 ├── Utils/
 ├── Views/
-├── Public/
-├── Storage/
+├── .env.example
+├── .gitignore
 ├── app.js
 ├── package.json
-├── .env.example
-└── README.md
+├── package-lock.json
+├── README.md
+└── setUpFolder.js
 ```
 
 ---

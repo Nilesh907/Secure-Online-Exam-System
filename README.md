@@ -101,6 +101,69 @@ Secure-Online-Exam-System/
 └── setUpFolder.js
 ```
 
+
+# 📸 Project Screenshots
+
+## 🏠 Home Page
+
+![Home Page](screenshots/home.jpeg)
+
+---
+
+## 🔐 Login Page
+
+![Login Page](screenshots/login.jpeg)
+
+---
+
+## 👨‍💼 Admin Dashboard
+
+![Admin Dashboard](screenshots/admin.jpeg)
+
+---
+
+## 👨‍🏫 Teacher Dashboard
+
+![Teacher Dashboard](screenshots/teacher.jpeg)
+
+---
+
+## 👨‍🎓 Student Dashboard
+
+![Student Dashboard](screenshots/student.jpeg)
+
+---
+
+## 📄 Paper Upload
+
+![Paper Upload](screenshots/paper.jpeg)
+
+---
+
+## 📅 Schedule Exam
+
+![Schedule Exam](screenshots/schedule.jpeg)
+
+---
+
+## 📝 Exam Running
+
+![Exam Running](screenshots/exam.jpeg)
+
+---
+
+## 🤖 AI Security Dashboard
+
+![AI Security Dashboard](screenshots/ai-dashboard.jpeg)
+
+---
+
+## 📊 AI Report
+
+![AI Report](screenshots/ai-report.jpeg)
+
+
+
 ---
 
 ## ⚙️ Installation

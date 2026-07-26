@@ -1,0 +1,38 @@
+<% locals.page = "users" %>
+<%- layout("/layouts/boilerplate") %>
+
+
+
+<h2>User Details</h2>
+
+<div class="detail-card">
+
+<p><strong>Name:</strong> <%= user.name %></p>
+
+<p><strong>Email:</strong> <%= user.email %></p>
+
+<p><strong>Role:</strong> <%= user.role %></p>
+
+<p><strong>Status:</strong> 
+<%= user.isActive ? "Active" : "Inactive" %>
+</p>
+
+<p><strong>Last Login:</strong>
+<%= user.lastLogin ? user.lastLogin.toLocaleString() : "Never" %>
+</p>
+
+</div>
+
+
+<div class="p-3">
+
+<a href="/users/<%= user._id %>/edit" class="btn btn-warning rounded-pill">
+Edit
+</a>
+
+<a href="/users" class="btn btn-secondary rounded-pill">
+Back
+</a>
+
+</div>
+</div>

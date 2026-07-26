@@ -1,0 +1,417 @@
+/* ==================================================
+                    PREMIUM NAVBAR
+================================================== */
+
+
+.custom-navbar .container{
+
+    max-width:1320px;
+
+}
+
+
+.custom-navbar{
+
+    background:#FFFFFF;
+
+    min-height:76px;
+
+    padding:12px 0;
+
+    border-bottom:1px solid #E5E7EB;
+
+    box-shadow:0 6px 18px rgba(15,23,42,.05);
+
+    transition:all .25s ease;
+
+    z-index:1000;
+
+}
+
+/* ==================================================
+                    BRAND
+================================================== */
+
+.navbar-brand{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:14px;
+
+    text-decoration:none;
+
+    transition:.25s;
+
+}
+
+.navbar-brand:hover{
+
+    transform:translateY(-1px);
+
+}
+
+.navbar-brand i{
+
+    width:48px;
+
+    height:48px;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    border-radius:14px;
+
+    background:#EFF6FF;
+
+    color:#2563EB;
+
+    font-size:22px;
+
+    transition:.25s;
+
+}
+
+.navbar-brand:hover i{
+
+    background:#2563EB;
+
+    color:#FFFFFF;
+
+    transform:rotate(-8deg);
+
+}
+
+.brand-title{
+
+    font-size:19px;
+
+    font-weight:700;
+
+    color:#0F172A;
+
+    line-height:1.2;
+
+}
+
+.brand-subtitle{
+
+    display:block;
+
+    margin-top:2px;
+
+    font-size:12px;
+
+    color:#64748B;
+
+    font-weight:500;
+
+}
+
+/* ==================================================
+                    NAVIGATION
+================================================== */
+
+.navbar-nav{
+
+    align-items:center;
+
+    gap:6px;
+
+}
+
+.navbar .nav-link{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:6px;
+
+    padding:10px 16px;
+
+    border-radius:10px;
+
+    font-size:14px;
+
+    font-weight:600;
+
+    color:#475569 !important;
+
+    transition:all .25s ease;
+
+}
+
+.navbar .nav-link i{
+
+    transition:.25s;
+
+}
+
+.navbar .nav-link:hover{
+
+    background:#EFF6FF;
+
+    color:#2563EB !important;
+
+    transform:translateY(-1px);
+
+}
+
+.navbar .nav-link:hover i{
+
+    transform:scale(1.15);
+
+}
+
+.navbar .nav-link.active{
+
+    background:#DBEAFE;
+
+    color:#2563EB !important;
+
+}
+
+/* ==================================================
+                    PROFILE
+================================================== */
+
+.profile-info{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:12px;
+
+    margin:0 18px;
+
+    padding:8px 16px;
+
+    background:#F8FAFC;
+
+    border:1px solid #E5E7EB;
+
+    border-radius:999px;
+
+    transition:.25s;
+
+}
+
+.profile-info:hover{
+
+    background:#EFF6FF;
+
+    transform:translateY(-1px);
+
+}
+
+.profile-circle{
+
+    width:42px;
+
+    height:42px;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    border-radius:50%;
+
+    background:#2563EB;
+
+    color:#FFFFFF;
+
+    font-size:17px;
+
+    font-weight:700;
+
+    transition:.25s;
+
+}
+
+.profile-info:hover .profile-circle{
+
+    transform:scale(1.08);
+
+}
+
+.profile-text{
+
+    display:flex;
+
+    flex-direction:column;
+
+    line-height:1.2;
+
+}
+
+.profile-name{
+
+    font-size:14px;
+
+    font-weight:700;
+
+    color:#0F172A;
+
+}
+
+.profile-text small{
+
+    font-size:12px;
+
+    color:#64748B;
+
+}
+
+/* ==================================================
+                    LOGOUT
+================================================== */
+
+.logout-btn{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:8px;
+
+    padding:10px 18px;
+
+    border:none;
+
+    border-radius:10px;
+
+    background:transparent;
+
+    color:#DC2626;
+
+    font-size:14px;
+
+    font-weight:600;
+
+    transition:all .25s ease;
+
+}
+
+.logout-btn:hover{
+
+    background:#FEF2F2;
+
+    transform:translateY(-1px);
+
+}
+
+.logout-btn i{
+
+    transition:.25s;
+
+}
+
+.logout-btn:hover i{
+
+    transform:translateX(3px);
+
+}
+
+/* ==================================================
+                    TOGGLER
+================================================== */
+
+.navbar-toggler{
+
+    border:none;
+
+    box-shadow:none !important;
+
+}
+
+.navbar-toggler:focus{
+
+    box-shadow:none !important;
+
+}
+
+/* ==================================================
+                    MOBILE
+================================================== */
+
+@media(max-width:991px){
+
+.navbar-collapse{
+
+margin-top:18px;
+
+padding:18px;
+
+background:#FFFFFF;
+
+border-radius:18px;
+
+box-shadow:0 15px 35px rgba(15,23,42,.08);
+
+animation:menuOpen .25s ease;
+
+}
+
+.navbar-nav{
+
+gap:10px;
+
+}
+
+.profile-info{
+
+margin:18px 0;
+
+}
+
+.logout-btn{
+
+width:100%;
+
+justify-content:flex-start;
+
+}
+
+}
+
+@media(max-width:576px){
+
+.profile-text{
+
+display:none;
+
+}
+
+}
+
+/* ==================================================
+                    MENU ANIMATION
+================================================== */
+
+@keyframes menuOpen{
+
+from{
+
+opacity:0;
+
+transform:translateY(-8px);
+
+}
+
+to{
+
+opacity:1;
+
+transform:translateY(0);
+
+}
+
+}

@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h2><%= paper.title %></h2>
+
+<form action="/reviewer/paper/<%= paper._id %>/decision" method="POST">
+  
+  <textarea name="comment" placeholder="Write review..."></textarea>
+
+  <button name="decision" value="APPROVED">Approve</button>
+  <button name="decision" value="REJECTED">Reject</button>
+
+</form>
+</body>
+</html>

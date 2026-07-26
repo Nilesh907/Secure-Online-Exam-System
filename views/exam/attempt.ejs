@@ -1,0 +1,66 @@
+<% locals.page = "exam" %>
+<%- layout("/layouts/boilerplate") %>
+
+
+<!-- HEADER -->
+<div
+    id="examData"
+    data-endtime="<%= paper.endTime.toISOString() %>">
+</div>
+
+<div class="exam-header">
+    <div>
+        <strong><%= paper.title %></strong>
+    </div>
+
+    <div class="timer" id="timer">
+        --:--
+    </div>
+</div>
+
+<!-- WARNING -->
+<div class="alert alert-warning">
+
+    <strong>Important:</strong>
+
+    Leaving fullscreen,
+    switching tabs repeatedly,
+    or closing the browser
+    may automatically submit
+    your exam.
+
+</div>
+
+<!-- PDF VIEW -->
+<div class="pdf-container">
+
+    <iframe
+    src="/exam/<%= paper._id %>/stream#toolbar=0&navpanes=0&scrollbar=0"
+    width="100%"
+    height="100%"
+    style="border:none; pointer-events:auto;">
+</iframe>
+</div>
+
+<!-- SUBMIT EXAM -->
+<div class="text-center mt-4">
+
+    <form
+        id="examForm"
+        action="/exam/<%= paper._id %>/submit"
+        method="POST">
+
+        <button
+            type="submit"
+            class="btn btn-danger btn-lg submit-btn">
+
+            Submit Exam
+
+        </button>
+
+    </form>
+
+</div>
+
+<!-- SECURITY + TIMER -->
+<script src="/js/examProtection.js"></script>

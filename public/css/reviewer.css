@@ -1,0 +1,19 @@
+/* ==========================================
+            REVIEWERS TABLE
+========================================== */
+
+.table th:nth-child(5),
+.table td:nth-child(5){
+
+    width:170px;
+    text-align:center;
+
+}
+
+.table th:last-child,
+.table td:last-child{
+
+    width:300px;
+    text-align:center;
+
+}

@@ -1,0 +1,458 @@
+/* ==================================================
+                    TABLE
+================================================== */
+.table{
+
+    width:100%;
+
+    min-width:100%;
+
+}
+
+/* ==================================================
+                    TABLE HEADER
+================================================== */
+
+.table thead th{
+
+    background:#F8FAFC;
+
+    padding:12px 8px;
+
+    font-size:11px;
+
+    border:none;
+
+    color:#64748B;
+
+    font-size:12px;
+
+    font-weight:700;
+
+    text-transform:uppercase;
+
+    letter-spacing:.8px;
+
+    white-space:nowrap;
+
+}
+
+/* ==================================================
+                    TABLE BODY
+================================================== */
+
+.table tbody tr{
+
+    background:#FFFFFF;
+
+    transition:all .25s ease;
+
+    box-shadow:0 4px 14px rgba(15,23,42,.05);
+
+}
+
+.table tbody tr:nth-child(even){
+
+background:#FCFCFD;
+
+}
+
+.table tbody tr:hover{
+
+    transform:translateY(-3px);
+
+    box-shadow:0 14px 32px rgba(37,99,235,.10);
+
+}
+
+.table td{
+
+    padding:12px 8px;
+
+    font-size:13px;
+
+}
+
+/* ==================================================
+                    FIRST & LAST COLUMN
+================================================== */
+
+.table td:first-child,
+
+.table th:first-child{
+
+    border-radius:12px 0 0 12px;
+
+}
+
+.table td:last-child,
+
+.table th:last-child{
+
+    border-radius:0 12px 12px 0;
+
+}
+
+
+
+
+/* ==================================================
+                    REPORT TABLE
+================================================== */
+
+.report-table{
+
+    width:100%;
+
+    border-collapse:collapse;
+
+}
+
+.report-table thead{
+
+    background:#0F172A;
+
+}
+
+.report-table thead th{
+
+    color:#FFFFFF;
+
+    padding:18px;
+
+    font-size:13px;
+
+    font-weight:600;
+
+    text-transform:uppercase;
+
+    letter-spacing:.5px;
+
+}
+
+.report-table tbody td{
+
+    padding:18px;
+
+    border-bottom:1px solid #EEF2F7;
+
+    color:#334155;
+
+    font-size:14px;
+
+}
+
+.report-table tbody tr:hover{
+
+    background:#F8FAFC;
+
+}
+
+/* ==================================================
+                    ROLE BADGES
+================================================== */
+.badge{
+
+display:inline-flex;
+
+align-items:center;
+
+justify-content:center;
+
+gap:6px;
+
+height:34px;
+
+min-width:110px;
+
+padding:0 18px;
+
+border-radius:999px;
+
+font-size:12px;
+
+font-weight:700;
+
+letter-spacing:.4px;
+
+transition:.25s;
+
+}
+
+/* Role */
+
+.badge-admin{
+
+    background:#FEE2E2;
+
+    color:#B91C1C;
+
+}
+
+.badge-teacher{
+
+    background:#DBEAFE;
+
+    color:#1D4ED8;
+
+}
+
+.badge-student{
+
+    background:#EDE9FE;
+
+    color:#6D28D9;
+
+}
+
+.badge-reviewer{
+
+    background:#FEF3C7;
+
+    color:#B45309;
+
+}
+
+/* ==================================================
+                    STATUS
+================================================== */
+
+.badge-active{
+
+    background:#DCFCE7;
+
+    color:#15803D;
+
+}
+
+.badge-inactive{
+
+    background:#F1F5F9;
+
+    color:#475569;
+
+}
+
+/* ==================================================
+                    RISK
+================================================== */
+
+.badge-low{
+
+    background:#DCFCE7;
+
+    color:#166534;
+
+}
+
+.badge-medium{
+
+    background:#FEF3C7;
+
+    color:#92400E;
+
+}
+
+.badge-high{
+
+    background:#FEE2E2;
+
+    color:#991B1B;
+
+}
+
+/* ================= PAPER STATUS ================= */
+
+.badge-approved,
+.badge-review,
+.badge-correction,
+.badge-draft{
+
+display:inline-flex;
+
+align-items:center;
+
+justify-content:center;
+
+min-width:100px;
+
+height:36px;
+
+padding:0 18px;
+
+border-radius:999px;
+
+background:#2563EB;
+
+color:#FFFFFF;
+
+font-size:12px;
+
+font-weight:700;
+
+letter-spacing:.5px;
+
+transition:.25s;
+
+}
+
+.badge-approved:hover,
+.badge-review:hover,
+.badge-correction:hover,
+.badge-draft:hover{
+
+transform:scale(1.04);
+
+}
+
+/* ==================================================
+                    ACTION BUTTONS
+================================================== */
+
+.paper-actions{
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:flex-start;
+
+    gap:8px;
+
+    white-space:nowrap;
+
+}
+
+.paper-actions .btn{
+
+    display:inline-flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+     padding:4px 8px;
+
+    font-size:12px;
+
+    height:36px;
+
+    white-space:nowrap;
+
+    min-width:auto;
+
+}
+
+.paper-actions .btn:hover{
+
+transform:translateY(-2px);
+
+}
+
+/* ==================================================
+                    VIEW BUTTON
+================================================== */
+
+.view-btn{
+
+    background:#2563EB;
+
+    color:#FFFFFF;
+
+    border:none;
+
+    padding:9px 18px;
+
+    border-radius:8px;
+
+    font-size:13px;
+
+    font-weight:600;
+
+    transition:.25s;
+
+}
+
+.view-btn:hover{
+
+    background:#1D4ED8;
+
+}
+
+.view-btn:active{
+
+    transform:scale(.97);
+
+}
+
+/* ==================================================
+                    EMPTY STATE
+================================================== */
+
+.no-data{
+
+    text-align:center;
+
+    padding:30px;
+
+    color:#64748B;
+
+    font-size:15px;
+
+}
+
+/* ==================================================
+                    RESPONSIVE
+================================================== */
+
+@media(max-width:992px){
+
+    .paper-actions{
+
+        flex-wrap:wrap;
+
+    }
+
+}
+
+@media(max-width:768px){
+
+    .table td{
+
+        padding:14px;
+
+        font-size:13px;
+
+    }
+
+    .table thead th{
+
+        font-size:11px;
+
+    }
+
+}
+
+/* ===========================================
+            TABLE ANIMATION
+=========================================== */
+
+@keyframes tableFade{
+
+from{
+
+opacity:0;
+
+transform:translateY(10px);
+
+}
+
+to{
+
+opacity:1;
+
+transform:translateY(0);
+
+}
+
+}

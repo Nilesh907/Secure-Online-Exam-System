@@ -1,0 +1,392 @@
+<% locals.page = "reviewers" %>
+<% locals.title = "Reviewer Management" %>
+
+<%- layout("/layouts/boilerplate") %>
+
+<!-- ================= HEADER ================= -->
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+
+    <div>
+
+        <h2 class="page-title mb-1">
+
+            Reviewer Management
+
+        </h2>
+
+        <p class="text-muted mb-0">
+
+            Manage reviewers and monitor paper review assignments.
+
+        </p>
+
+    </div>
+
+    <a href="/reviewers/new" class="btn btn-add">
+
+        <i class="fa-solid fa-user-plus me-2"></i>
+
+        Add Reviewer
+
+    </a>
+
+</div>
+
+<!-- ================= REVIEWER TABLE ================= -->
+
+<div class="card">
+
+<div class="table-responsive">
+
+<table class="table table-hover align-middle">
+
+<thead>
+
+<tr>
+
+<th>Name</th>
+
+<th>Email</th>
+
+<th>Reviewer ID</th>
+
+<th>Department</th>
+
+<th>Status</th>
+
+<th>Availability</th>
+
+<th>Assignments</th>
+
+<th>Last Login</th>
+
+<th class="text-center">
+
+Actions
+
+</th>
+
+</tr>
+
+</thead>
+
+<tbody>
+
+<% if(reviewers.length===0){ %>
+
+<tr>
+
+<td colspan="9" class="text-center no-data">
+
+<i class="fa-solid fa-user-check fa-2x mb-3 text-secondary"></i>
+
+<br>
+
+No reviewers found.
+
+</td>
+
+</tr>
+
+<% } %>
+
+<% reviewers.forEach(r=>{ %>
+
+<tr>
+
+<td>
+
+<strong>
+
+<%= r.user?.name || "N/A" %>
+
+</strong>
+
+</td>
+
+<td>
+
+<%= r.user?.email || "N/A" %>
+
+</td>
+
+<td>
+
+<span class="badge badge-reviewer">
+
+<%= r.reviewerId %>
+
+</span>
+
+</td>
+
+<td>
+
+<%= r.department %>
+
+</td>
+
+<td>
+
+<span class="badge
+
+<%= r.status==="APPROVED"
+
+? "badge-active"
+
+: r.status==="UNDER_REVIEW"
+
+? "badge-review"
+
+: "badge-inactive"
+
+%>">
+
+<%= r.status.replaceAll("_"," ") %>
+
+</span>
+
+</td>
+
+<td>
+
+<%= r.availability %>
+
+</td>
+
+<td>
+
+<%= r.maxAssignments %>
+
+</td>
+
+<td>
+
+<%= r.lastLogin
+
+? r.lastLogin.toLocaleDateString("en-IN")
+
+: "Never"
+
+%>
+
+</td>
+
+<td>
+
+<div class="paper-actions">
+
+<a href="/reviewers/<%= r._id %>"
+
+class="btn btn-view btn-sm">
+
+<i class="fa-solid fa-eye me-1"></i>
+
+View
+
+</a>
+
+<a href="/reviewers/<%= r._id %>/edit"
+
+class="btn btn-edit btn-sm">
+
+<i class="fa-solid fa-pen-to-square me-1"></i>
+
+Edit
+
+</a>
+
+<form
+
+action="/reviewers/<%= r._id %>?_method=DELETE"
+
+method="POST"
+
+class="d-inline">
+
+<button
+
+class="btn btn-delete btn-sm"
+
+onclick="return confirm('Delete this reviewer?')">
+
+<i class="fa-solid fa-trash me-1"></i>
+
+Delete
+
+</button>
+
+</form>
+
+</div>
+
+</td>
+
+</tr>
+
+<% }) %>
+
+</tbody>
+
+</table>
+
+</div>
+
+</div>
+
+<!-- ================= PAPERS FOR REVIEW ================= -->
+
+<div class="d-flex justify-content-between align-items-center mt-5 mb-4">
+
+<div>
+
+<h2 class="page-title mb-1">
+
+Papers for Review
+
+</h2>
+
+<p class="text-muted mb-0">
+
+Review submitted papers and approve or request corrections.
+
+</p>
+
+</div>
+
+</div>
+
+<% if(!papers || papers.length===0){ %>
+
+<div class="card">
+
+<div class="card-body text-center py-5">
+
+<i class="fa-regular fa-folder-open fa-3x text-secondary mb-3"></i>
+
+<h5>No Papers Available</h5>
+
+<p class="text-muted">
+
+There are currently no papers waiting for review.
+
+</p>
+
+</div>
+
+</div>
+
+<% } %>
+
+<div class="row">
+
+<% papers.forEach(paper=>{ %>
+
+<div class="col-lg-4 col-md-6 mb-4">
+
+<div class="card h-100 shadow-sm">
+
+<div class="card-body">
+
+<h5 class="card-title">
+
+<%= paper.title %>
+
+</h5>
+
+<p class="text-muted mb-3">
+
+<strong>Subject:</strong>
+
+<%= paper.subject %>
+
+<br>
+
+<strong>Department:</strong>
+
+<%= paper.department %>
+
+</p>
+
+<span class="badge badge-review">
+
+<%= paper.status.replaceAll("_"," ") %>
+
+</span>
+
+<hr>
+
+<div class="d-grid gap-2">
+
+<a
+
+href="/papers/<%= paper._id %>/view"
+
+class="btn btn-view">
+
+<i class="fa-solid fa-eye me-2"></i>
+
+View Paper
+
+</a>
+
+<form
+
+action="/papers/<%= paper._id %>/approve"
+
+method="POST">
+
+<button
+
+class="btn btn-success w-100">
+
+<i class="fa-solid fa-check me-2"></i>
+
+Approve
+
+</button>
+
+</form>
+
+<form
+
+action="/papers/<%= paper._id %>/reject"
+
+method="POST">
+
+<input
+
+type="text"
+
+name="comment"
+
+class="form-control mb-2"
+
+placeholder="Correction comments"
+
+required>
+
+<button
+
+class="btn btn-delete w-100">
+
+<i class="fa-solid fa-xmark me-2"></i>
+
+Send for Correction
+
+</button>
+
+</form>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+<% }) %>
+
+</div>

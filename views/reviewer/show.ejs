@@ -1,0 +1,47 @@
+<% locals.page = "reviewers" %>
+<%- layout("/layouts/boilerplate") %>
+
+
+
+<h2 class="page-title">Reviewer Details</h2>
+
+<div class="detail-card">
+
+<p><strong>Reviewer ID:</strong> <%= reviewer.reviewerId %></p>
+
+<p><strong>Department:</strong> <%= reviewer.department %></p>
+
+<p><strong>Status:</strong> <%= reviewer.status %></p>
+
+<p><strong>Availability:</strong> <%= reviewer.availability %></p>
+
+<p><strong>Max Assignments:</strong> <%= reviewer.maxAssignments %></p>
+
+<p><strong>Last Login:</strong>
+<%= reviewer.lastLogin ? reviewer.lastLogin.toLocaleString() : "Never" %>
+</p>
+
+</div>
+
+
+
+<% if (currentUser.role === "Teacher") { %>
+  <form action="/papers/<%= paper._id %>/submit" method="POST">
+    <button>Submit to Reviewer</button>
+  </form>
+<% } %>
+
+
+
+
+<div class="p-3">
+
+<a href="/reviewers/<%= reviewer._id %>/edit" class="btn btn-edit">
+Edit
+</a>
+
+<a href="/reviewers" class="btn btn-add">
+Back
+</a>
+
+</div>

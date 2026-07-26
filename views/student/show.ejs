@@ -1,0 +1,40 @@
+<% locals.page = "students" %>
+<%- layout("/layouts/boilerplate") %>
+
+
+
+<h2>Student Details</h2>
+
+<div class="detail-card">
+
+<p><strong>Enrollment No:</strong> <%= student.enrollmentNumber %></p>
+
+<p><strong>Department:</strong> <%= student.department %></p>
+
+<p><strong>Semester:</strong> <%= student.semester %></p>
+
+<p><strong>Status:</strong> 
+<%= student.isBlocked ? "Blocked" : "Active" %>
+</p>
+
+<p><strong>Suspicious Activity:</strong> 
+<%= student.suspiciousActivityCount %>
+</p>
+
+<p><strong>Last Login:</strong>
+<%= student.lastLogin ? student.lastLogin.toLocaleString() : "Never" %>
+</p>
+
+</div>
+
+<div class="p-3">
+
+<a href="/students/<%= student._id %>/edit" class="btn btn-warning rounded-pill">
+Edit
+</a>
+
+<a href="/students" class="btn btn-secondary rounded-pill">
+Back
+</a>
+
+</div>

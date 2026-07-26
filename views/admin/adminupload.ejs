@@ -1,0 +1,82 @@
+<% locals.page = "admin" %>
+<%- layout("/layouts/boilerplate") %>
+
+
+<h2 class="page-title">Admin Upload Paper</h2>
+
+<form action="/admin/upload-paper" method="POST" class="form-box" enctype="multipart/form-data">
+
+  <!-- Title -->
+  <div class="form-group">
+    <label>Title</label>
+    <input type="text" name="title" required>
+  </div>
+
+  <!-- Subject -->
+  <div class="form-group">
+    <label>Subject</label>
+    <input type="text" name="subject" required>
+  </div>
+
+  <!-- Department -->
+  <div class="form-group">
+    <label>Department</label>
+    <input type="text" name="department" required>
+  </div>
+
+  
+  <!-- Watermark Text -->
+  <div class="form-group">
+    <label>Watermark Text</label>
+    <input type="text" name="watermarkText">
+  </div>
+
+  <!-- Start Time -->
+  <div class="form-group">
+    <label>Start Time</label>
+    <input type="datetime-local" name="startTime" required>
+  </div>
+
+  <!-- End Time -->
+  <div class="form-group">
+    <label>End Time</label>
+    <input type="datetime-local" name="endTime" required>
+  </div>
+
+  <!-- Status -->
+  <div class="form-group">
+    <label>Status</label>
+    <select name="status">
+      <option value="DRAFT">DRAFT</option>
+      <option value="UNDER_REVIEW">UNDER REVIEW</option>
+      <option value="APPROVED">APPROVED</option>
+    </select>
+  </div>
+
+  <hr>
+
+  <h4>Questions</h4>
+
+  <div class="form-group">
+    <input type="text" name="questions[0][question]" placeholder="Question 1" required>
+    <input type="number" name="questions[0][marks]" placeholder="Marks" required>
+  </div>
+
+  <div class="form-group">
+    <input type="text" name="questions[1][question]" placeholder="Question 2">
+    <input type="number" name="questions[1][marks]" placeholder="Marks">
+  </div>
+
+  <div class="form-group">
+    <input type="text" name="questions[2][question]" placeholder="Question 3">
+    <input type="number" name="questions[2][marks]" placeholder="Marks">
+  </div>
+
+  <!-- File Upload -->
+  <div class="form-group">
+    <label>Upload File</label>
+    <input type="file" name="paper" required accept=".pdf,.jpg,.jpeg,.png">
+  </div>
+
+  <button type="submit" class="btn-save">Upload Paper</button>
+</form>

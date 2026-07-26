@@ -1,0 +1,50 @@
+
+<% locals.page = "register" %>
+<%- layout("/layouts/boilerplate") %>
+
+
+
+<div class="container mt-5 register-container">
+
+  <div class="card p-4 register-card">
+    <h3 class="text-center mb-3">Register</h3>
+
+    <form action="/auth/register" method="POST">
+
+      <div class="mb-3">
+        <label>Name</label>
+        <input type="text" name="name" class="form-control" required>
+      </div>
+
+      <div class="mb-3">
+        <label>Email</label>
+        <input type="email" name="email" class="form-control" required>
+      </div>
+
+      <div class="mb-3">
+        <label>Password</label>
+        <input type="password" name="password" class="form-control" required>
+      </div>
+
+      <div class="mb-3">
+        <label>Role</label>
+        <select name="role" class="form-select">
+          <option value="Admin">Admin</option>
+          <option value="Teacher">Teacher</option>
+          <option value="Student">Student</option>
+          <option value="Reviewer">Reviewer</option>
+        </select>
+      </div>
+
+      <button class="btn btn-add w-100">Register</button>
+
+    </form>
+
+    <p class="text-center mt-3">
+      Already have an account?
+      <a href="/auth/login">Login</a>
+    </p>
+
+  </div>
+
+</div>

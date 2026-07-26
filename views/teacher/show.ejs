@@ -1,0 +1,88 @@
+<% locals.page = "teachers" %>
+<%- layout("/layouts/boilerplate") %>
+
+
+
+<div class="container mt-4">
+
+<h2 class="page-title mb-4">
+<i class="fa-solid fa-user-tie me-2"></i>
+Teacher Profile
+</h2>
+
+<div class="card shadow-sm">
+
+<div class="table-responsive">
+
+<table class="table table-hover align-middle mb-0">
+
+<tbody>
+
+<tr>
+<th>Name</th>
+<td><%= teacher.user?.name || "No Name Assigned" %></td>
+</tr>
+
+<tr>
+<th>Email</th>
+<td><%= teacher.user?.email || "No Email Assigned" %></td>
+</tr>
+
+<tr>
+<th>Role</th>
+<td><%= teacher.user?.role || "No Role Assigned" %></td>
+</tr>
+
+<tr>
+<th>Teacher ID</th>
+<td><span class="badge bg-primary"><%= teacher.teacherId %></span></td>
+</tr>
+
+<tr>
+<th>Department</th>
+<td><%= teacher.department %></td>
+</tr>
+
+<tr>
+<th>Designation</th>
+<td><%= teacher.designation %></td>
+</tr>
+
+<tr>
+<th>Qualification</th>
+<td><%= teacher.qualification %></td>
+</tr>
+
+<tr>
+<th>Experience</th>
+<td><%= teacher.experienceYears %> Years</td>
+</tr>
+
+<tr>
+<th>Last Login</th>
+<td>
+<%= teacher.user?.lastLogin ? teacher.user.lastLogin.toDateString() : "Never" %>
+</td>
+</tr>
+
+</tbody>
+
+</table>
+
+</div>
+
+<div class="p-3">
+
+<a href="/teachers/<%= teacher._id %>/edit" class="btn btn-warning rounded-pill">
+Edit
+</a>
+
+<a href="/teachers" class="btn btn-secondary rounded-pill">
+Back
+</a>
+
+</div>
+
+</div>
+
+</div>

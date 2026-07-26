@@ -1,0 +1,93 @@
+<% locals.page = "papers" %>
+<% locals.title = "Edit Paper" %>
+
+<%- layout("/layouts/boilerplate") %>
+
+<div class="edit-container">
+
+<h2 class="page-title">
+    Edit Examination Paper
+</h2>
+
+<p class="page-subtitle">
+    Update paper information and upload a revised document if needed.
+</p>
+
+<div class="edit-card">
+<form action="/papers/<%= paper._id %>?_method=PUT" method="POST" class="form-box">
+
+<!-- ================= TITLE ================= -->
+<div class="form-group">
+  <label>Title</label>
+
+  <input 
+    type="text" 
+    name="paper[title]" 
+    value="<%= paper.title %>"
+  >
+
+  <% if (paper.reviewNotes && paper.reviewNotes.length) { %>
+    <% paper.reviewNotes.forEach(function(note){ %>
+      <% if(note.field === "title") { %>
+        <div class="alert alert-danger">
+          <%= note.comment %>
+        </div>
+      <% } %>
+    <% }) %>
+  <% } %>
+
+</div>
+
+<!-- ================= DESCRIPTION ================= -->
+<div class="form-group">
+  <label>Description</label>
+
+  <textarea name="paper[description]" required><%= paper.description %></textarea>
+
+  <% if (paper.reviewNotes && paper.reviewNotes.length) { %>
+    <% paper.reviewNotes.forEach(function(note){ %>
+      <% if(note.field === "description") { %>
+        <div class="review-note">
+          <%= note.comment %>
+        </div>
+      <% } %>
+    <% }) %>
+  <% } %>
+
+</div>
+
+<!-- ================= SUBJECT ================= -->
+<div class="form-group">
+  <label>Subject</label>
+  <input 
+    type="text" 
+    name="paper[subject]" 
+    value="<%= paper.subject %>"
+  >
+</div>
+
+<!-- ================= DEPARTMENT ================= -->
+<div class="form-group">
+  <label>Department</label>
+  <input 
+    type="text" 
+    name="paper[department]" 
+    value="<%= paper.department %>"
+  >
+</div>
+
+<div class="form-group">
+  <label>Replace PDF (optional)</label>
+  <input type="file" name="pdf" accept="application/pdf">
+</div>
+
+
+<button class="btn-save">Update Paper</button>
+
+</form>
+
+
+</div>
+
+
+</div>

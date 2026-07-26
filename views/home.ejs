@@ -1,0 +1,182 @@
+<% locals.page = "home" %>
+<%- layout("/layouts/boilerplate") %>
+
+<!-- ================= HERO ================= -->
+
+<section class="hero-section text-center">
+
+    <span class="badge bg-primary-subtle text-primary px-3 py-2 rounded-pill mb-3">
+        <i class="fa-solid fa-shield-halved me-2"></i>
+        AI Powered Security Platform
+    </span>
+
+    <h1 class="hero-title">
+        Paper Secured System
+    </h1>
+
+    <p class="hero-description">
+
+        Protect examination papers using AES-256 Encryption,
+        SHA-256 Integrity Verification,
+        JWT Authentication,
+        Device Fingerprinting,
+        Live Monitoring
+        and AI-Based Leak Prediction.
+
+    </p>
+
+    <div class="welcome-box">
+
+        <i class="fa-solid fa-circle-check text-success me-2"></i>
+
+        Welcome back,
+
+        <strong>
+            <%= role %>
+        </strong>
+
+        Your secure examination environment is ready.
+
+    </div>
+
+</section>
+
+<!-- ================= ACTION BUTTONS ================= -->
+
+<div class="hero-buttons">
+
+    <a href="/auth/history" class="btn btn-success">
+
+        <i class="fa-solid fa-chart-line me-2"></i>
+
+        Dashboard
+
+    </a>
+
+    <form action="/auth/logout" method="POST" class="d-inline">
+
+        <button class="btn btn-outline-danger">
+
+            <i class="fa-solid fa-right-from-bracket me-2"></i>
+
+            Logout
+
+        </button>
+
+    </form>
+
+</div>
+
+<!-- ================= SECURITY STATUS ================= -->
+
+<section>
+
+<div class="row g-4">
+
+<div class="col-lg-3 col-md-6">
+
+<div class="card feature-card h-100 text-center">
+
+<div class="card-body">
+
+<div class="feature-icon mb-3">
+<i class="fa-solid fa-lock"></i>
+</div>
+
+<h5>Encryption</h5>
+
+<p class="text-muted small">
+AES-256 Military Grade Encryption
+</p>
+
+<span class="badge bg-success px-3 py-2">
+ACTIVE
+</span>
+
+</div>
+
+</div>
+
+</div>
+
+<div class="col-lg-3 col-md-6">
+
+<div class="card feature-card h-100 text-center">
+
+<div class="card-body">
+
+<div class="feature-icon mb-3">
+<i class="fa-solid fa-file-shield"></i>
+</div>
+
+<h5>Integrity</h5>
+
+<p class="text-muted small">
+SHA-256 Verification
+</p>
+
+<span class="badge bg-success px-3 py-2">
+VERIFIED
+</span>
+
+</div>
+
+</div>
+
+</div>
+
+<div class="col-lg-3 col-md-6">
+
+<div class="card feature-card h-100 text-center">
+
+<div class="card-body">
+
+<div class="feature-icon mb-3">
+<i class="fa-solid fa-fingerprint"></i>
+</div>
+
+<h5>Authentication</h5>
+
+<p class="text-muted small">
+Device Fingerprinting
+</p>
+
+<span class="badge bg-success px-3 py-2">
+ENABLED
+</span>
+
+</div>
+
+</div>
+
+</div>
+
+<div class="col-lg-3 col-md-6">
+
+<div class="card feature-card h-100 text-center">
+
+<div class="card-body">
+
+<div class="feature-icon mb-3">
+<i class="fa-solid fa-shield-halved"></i>
+</div>
+
+<h5>Protection</h5>
+
+<p class="text-muted small">
+AI Threat Monitoring
+</p>
+
+<span class="badge bg-success px-3 py-2">
+MONITORING
+</span>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</section>

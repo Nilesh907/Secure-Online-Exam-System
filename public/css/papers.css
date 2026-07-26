@@ -1,0 +1,47 @@
+/* ==========================================
+                PAPER TABLE
+========================================== */
+
+.table th:nth-child(4),
+.table td:nth-child(4){
+
+    width:170px;
+    text-align:center;
+
+}
+
+.table th:last-child,
+.table td:last-child{
+
+    width:320px;
+    text-align:center;
+
+}
+
+.paper-actions{
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    gap:8px;
+    flex-wrap:nowrap;
+}
+
+.paper-actions .btn{
+
+    min-width:105px;
+}
+
+.card{
+
+    max-width:1300px;
+
+    margin:auto;
+
+}
+
+.table-responsive{
+
+    overflow-x:auto;
+
+}

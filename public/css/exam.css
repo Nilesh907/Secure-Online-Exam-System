@@ -1,0 +1,44 @@
+.exam-header{
+    background:#111827;
+    color:#fff;
+    padding:12px 20px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    border-radius:8px;
+    margin-bottom:15px;
+}
+
+.timer{
+    font-weight:bold;
+    color:#22c55e;
+}
+
+.pdf-container{
+    width:100%;
+    height:60vh;
+    border-radius:10px;
+    overflow:hidden;
+    border:1px solid #ddd;
+    margin-bottom:20px;
+}
+
+.submit-btn{
+    width:100%;
+    max-width:300px;
+}
+
+/* Only if exam.ejs uses these */
+
+.questions-container{
+    max-width:900px;
+    margin:auto;
+}
+
+.question-card{
+    background:#fff;
+    padding:15px;
+    border-radius:10px;
+    margin-bottom:15px;
+    box-shadow:0 3px 10px rgba(0,0,0,.05);
+}

@@ -1,0 +1,451 @@
+<% locals.page = "dashboard" %>
+<% locals.title = "AI Security Dashboard" %>
+<% locals.script = "dashboard" %>
+
+<%- layout("/layouts/boilerplate") %>
+
+
+<!-- ================= Dashboard Header ================= -->
+
+<div class="dashboard-header">
+
+    <div>
+
+        <span class="dashboard-badge">
+
+            <i class="fa-solid fa-shield-halved"></i>
+
+            AI Monitoring
+
+        </span>
+
+        <h1 class="dashboard-title">
+
+            AI Security Dashboard
+
+        </h1>
+
+        <p class="dashboard-subtitle">
+
+            Monitor examination security, analyze AI generated reports,
+            and track suspicious activities in real time.
+
+        </p>
+
+    </div>
+
+    <div class="dashboard-status">
+
+        <span class="status-dot"></span>
+
+        <span>
+
+            System Online
+
+        </span>
+
+    </div>
+
+</div>
+
+
+
+<!-- ===================== DASHBOARD CARDS ===================== -->
+
+<!-- ================= Analytics ================= -->
+
+<div class="section-heading">
+
+    <span class="section-tag">
+
+        <i class="fa-solid fa-chart-line"></i>
+
+        Analytics
+
+    </span>
+
+    <h2>
+
+        AI Risk Analytics
+
+    </h2>
+
+    <p>
+
+        Real-time visualization of student risk scores and AI threat detection.
+
+    </p>
+
+</div>
+
+<!-- ================= KPI CARDS ================= -->
+
+<div class="cards">
+
+    <!-- Total Reports -->
+
+    <div class="dashboard-card blue">
+
+        <div class="card-icon">
+
+            <i class="fa-solid fa-file-shield"></i>
+
+        </div>
+
+        <div>
+
+            <h2>Total Reports</h2>
+
+            <p><%= totalReports %></p>
+
+            <small>
+
+                AI reports generated
+
+            </small>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- High Risk -->
+
+    <div class="dashboard-card red">
+
+        <div class="card-icon">
+
+            <i class="fa-solid fa-triangle-exclamation"></i>
+
+        </div>
+
+        <div>
+
+            <h2>High Risk</h2>
+
+            <p><%= highRisk %></p>
+
+            <small>
+
+                Immediate attention
+
+            </small>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- Medium Risk -->
+
+    <div class="dashboard-card yellow">
+
+        <div class="card-icon">
+
+            <i class="fa-solid fa-eye"></i>
+
+        </div>
+
+        <div>
+
+            <h2>Medium Risk</h2>
+
+            <p><%= mediumRisk %></p>
+
+            <small>
+
+                Under monitoring
+
+            </small>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- Low Risk -->
+
+    <div class="dashboard-card green">
+
+        <div class="card-icon">
+
+            <i class="fa-solid fa-circle-check"></i>
+
+        </div>
+
+        <div>
+
+            <h2>Low Risk</h2>
+
+            <p><%= lowRisk %></p>
+
+            <small>
+
+                Normal activity
+
+            </small>
+
+        </div>
+
+    </div>
+
+</div>
+
+<!-- ===================== CHARTS ===================== -->
+
+
+<div class="section-heading">
+
+    <h2>Analytics</h2>
+
+    <p>
+        AI generated insights from exam monitoring.
+    </p>
+
+</div>
+
+<div class="charts-container">
+
+    <!-- Risk Chart -->
+
+    <div class="chart-card">
+
+    <div class="chart-header">
+
+        <div>
+
+            <h3>
+
+                Student Risk Score
+
+            </h3>
+
+            <small>
+
+                Live AI monitoring
+
+            </small>
+
+        </div>
+
+        <span class="chart-badge">
+
+            Live
+
+        </span>
+
+    </div>
+
+    <canvas id="riskChart"></canvas>
+
+</div>
+</div>
+
+
+    <!-- Pie Chart -->
+
+    <div class="chart-card">
+
+    <div class="chart-header">
+
+        <div>
+
+            <h3>
+
+                Threat Distribution
+
+            </h3>
+
+            <small>
+
+                AI generated threat levels
+
+            </small>
+
+        </div>
+
+        <span class="chart-badge">
+
+            Updated
+
+        </span>
+
+    </div>
+
+    <canvas id="pieChart"></canvas>
+
+</div>
+
+
+<!-- ===================== REPORTS ===================== -->
+
+<div class="section-heading">
+
+    <h2>Recent AI Reports</h2>
+
+    <p>
+        AI generated examination security reports.
+    </p>
+
+</div>
+
+<div class="table-card">
+
+    <div class="table-responsive">
+
+        <table class="table report-table align-middle">
+
+            <thead>
+
+                <tr>
+
+                    <th>Student</th>
+                    <th>Risk</th>
+                    <th>Threat</th>
+                    <th>Prediction</th>
+                    <th>Confidence</th>
+                    <th>Action</th>
+                    <th>Violation</th>
+                    <th>Date</th>
+                    <th></th>
+
+                </tr>
+
+            </thead>
+
+            <tbody>
+
+            <% reports.forEach(report=>{ %>
+
+                <tr>
+
+                    <td>
+
+                        <strong>
+
+                        <%= report.studentId ? report.studentId.name : "Unknown" %>
+
+                        </strong>
+
+                    </td>
+
+                    <td>
+
+                        <strong>
+
+                        <%= report.riskScore %>
+
+                        </strong>
+
+                    </td>
+
+                    <td>
+
+                        <% if(report.threatLevel==="LOW"){ %>
+
+                            <span class="badge badge-low">
+
+                                LOW
+
+                            </span>
+
+                        <% } %>
+
+                        <% if(report.threatLevel==="MEDIUM"){ %>
+
+                            <span class="badge badge-medium">
+
+                                MEDIUM
+
+                            </span>
+
+                        <% } %>
+
+                        <% if(report.threatLevel==="HIGH"){ %>
+
+                            <span class="badge badge-high">
+
+                                HIGH
+
+                            </span>
+
+                        <% } %>
+
+                    </td>
+
+                    <td>
+
+                        <%= report.leakPrediction %>%
+
+                    </td>
+
+                    <td>
+
+                        <%= report.confidence %>%
+
+                    </td>
+
+                    <td>
+
+                        <small>
+
+                            <%= report.recommendedAction %>
+
+                        </small>
+
+                    </td>
+
+                    <td>
+
+                        <%= report.violationType %>
+
+                    </td>
+
+                    <td>
+
+                        <%= report.createdAt.toLocaleString() %>
+
+                    </td>
+
+                    <td>
+
+                        <a href="/admin/report/<%= report._id %>"
+
+                           class="btn btn-view btn-sm">
+
+                            View
+
+                        </a>
+
+                    </td>
+
+                </tr>
+
+            <% }) %>
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+
+window.dashboardData = {
+
+    studentNames: <%- JSON.stringify(studentNames) %>,
+
+    riskScores: <%- JSON.stringify(riskScores) %>,
+
+    threatCounts: <%- JSON.stringify(threatCounts) %>
+
+};
+
+</script>

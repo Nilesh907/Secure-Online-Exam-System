@@ -1,0 +1,73 @@
+<% locals.page = "teachers" %>
+<%- layout("/layouts/boilerplate") %>
+
+
+
+<div class="container mt-4">
+
+<h2 class="page-title mb-4">
+<i class="fa-solid fa-user-pen me-2"></i>
+Edit Teacher
+</h2>
+
+<div class="card shadow-sm p-4">
+
+<form action="/teachers/<%= teacher._id %>?_method=PUT" method="POST">
+
+<div class="mb-3">
+<label class="form-label">Teacher ID</label>
+<input type="text"
+name="teacherId"
+value="<%= teacher.teacherId %>"
+class="form-control"
+required>
+</div>
+
+<div class="mb-3">
+<label class="form-label">Department</label>
+<input type="text"
+name="department"
+value="<%= teacher.department %>"
+class="form-control"
+required>
+</div>
+
+<div class="mb-3">
+<label class="form-label">Designation</label>
+<input type="text"
+name="designation"
+value="<%= teacher.designation %>"
+class="form-control"
+required>
+</div>
+
+<div class="mb-3">
+<label class="form-label">Qualification</label>
+<input type="text"
+name="qualification"
+value="<%= teacher.qualification %>"
+class="form-control"
+required>
+</div>
+
+<div class="mb-3">
+<label class="form-label">Experience (Years)</label>
+<input type="number"
+name="experienceYears"
+value="<%= teacher.experienceYears %>"
+class="form-control">
+</div>
+
+<button class="btn btn-warning rounded-pill px-4">
+Update Teacher
+</button>
+
+<a href="/teachers/<%= teacher._id %>" class="btn btn-secondary rounded-pill px-4">
+Cancel
+</a>
+
+</form>
+
+</div>
+
+</div>

@@ -1,0 +1,210 @@
+<nav class="navbar navbar-expand-lg custom-navbar sticky-top">
+
+    <div class="container">
+
+        <!-- Brand -->
+
+        <a class="navbar-brand" href="/">
+
+            <i class="fa-solid fa-shield-halved"></i>
+
+            <div>
+
+                <div class="brand-title">
+                    Paper Security
+                </div>
+
+                <small class="brand-subtitle">
+                    Secure Exam Platform
+                </small>
+
+            </div>
+
+        </a>
+
+        <!-- Mobile Toggle -->
+
+        <button
+            class="navbar-toggler"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#navbarNav"
+            aria-controls="navbarNav"
+            aria-expanded="false"
+            aria-label="Toggle navigation">
+
+            <span class="navbar-toggler-icon"></span>
+
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarNav">
+
+            <!-- Left Menu -->
+
+            <ul class="navbar-nav me-auto">
+
+                <li class="nav-item">
+
+                    <a class="nav-link <%= locals.page === 'home' ? 'active' : '' %>" href="/">
+
+                        <i class="fa-solid fa-house"></i>
+
+                        Home
+
+                    </a>
+
+                </li>
+
+                <li class="nav-item">
+
+                    <a class="nav-link <%= locals.page === 'papers' ? 'active' : '' %>" href="/papers">
+
+                        <i class="fa-solid fa-file-lines"></i>
+
+                        Papers
+
+                    </a>
+
+                </li>
+
+                <% if(currentRole === "Admin"){ %>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="/teachers">
+                        <i class="fa-solid fa-user-tie"></i>
+                        Teachers
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="/students">
+                        <i class="fa-solid fa-user-graduate"></i>
+                        Students
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="/reviewers">
+                        <i class="fa-solid fa-user-check"></i>
+                        Reviewers
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="/users">
+                        <i class="fa-solid fa-users"></i>
+                        Users
+                    </a>
+                </li>
+
+                <% } %>
+
+            </ul>
+
+            <!-- Right Menu -->
+
+            <ul class="navbar-nav align-items-center">
+
+                <% if(!currentUser){ %>
+
+                    <li class="nav-item">
+
+                        <a class="nav-link" href="/auth/login">
+
+                            <i class="fa-solid fa-right-to-bracket"></i>
+
+                            Login
+
+                        </a>
+
+                    </li>
+
+                    <li class="nav-item">
+
+                        <a class="nav-link" href="/auth/register">
+
+                            <i class="fa-solid fa-user-plus"></i>
+
+                            Register
+
+                        </a>
+
+                    </li>
+
+                <% } else { %>
+
+                    <li class="nav-item profile-info">
+
+                        <div class="profile-circle">
+
+                            <% if(currentName){ %>
+
+                                <%= currentName.charAt(0).toUpperCase() %>
+
+                            <% }else{ %>
+
+                                <i class="fa-solid fa-user"></i>
+
+                            <% } %>
+
+                        </div>
+
+                        <div class="profile-text">
+
+                            <span class="profile-name">
+
+                                <%= currentName %>
+
+                            </span>
+
+                            <small>
+
+                                <%= currentRole %>
+
+                            </small>
+
+                        </div>
+
+                    </li>
+
+                    <li class="nav-item">
+
+                        <a class="nav-link" href="/auth/history">
+
+                            <i class="fa-solid fa-clock-rotate-left"></i>
+
+                            Activity
+
+                        </a>
+
+                    </li>
+
+                    <li class="nav-item">
+
+                        <form action="/auth/logout" method="POST">
+
+                            <button class="logout-btn" type="submit">
+
+                                <i class="fa-solid fa-right-from-bracket"></i>
+
+                                Logout
+
+                            </button>
+
+                        </form>
+
+                    </li>
+
+                <% } %>
+
+            </ul>
+
+        </div>
+
+    </div>
+
+</nav>
+
+
+
+

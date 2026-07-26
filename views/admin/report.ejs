@@ -1,0 +1,345 @@
+<% locals.page="report" %>
+<% locals.title="AI Security Report" %>
+
+<%- layout("/layouts/boilerplate") %>
+    <title>AI Security Report</title>
+
+<div class="report-container">
+
+    <!-- ================= REPORT HEADER ================= -->
+
+    <div class="report-header">
+
+        <div>
+
+            <h1>🤖 AI Security Report</h1>
+
+            <p>AI Generated Examination Security Analysis</p>
+
+        </div>
+
+        <a href="/admin/dashboard" class="back">
+
+            ⬅ Back to Dashboard
+
+        </a>
+
+    </div>
+
+    <!-- ================= REPORT SUMMARY ================= -->
+
+<div class="report-summary">
+
+    <div class="summary-card">
+
+        <span>Risk Score</span>
+
+        <h3><%= report.riskScore %>%</h3>
+
+    </div>
+
+    <div class="summary-card">
+
+        <span>Threat Level</span>
+
+        <h3><%= report.threatLevel %></h3>
+
+    </div>
+
+    <div class="summary-card">
+
+        <span>Confidence</span>
+
+        <h3><%= report.confidence %>%</h3>
+
+    </div>
+
+    <div class="summary-card">
+
+        <span>AI Provider</span>
+
+        <h3><%= report.provider || "LOCAL AI" %></h3>
+
+    </div>
+
+</div>
+
+    <!-- ================= STUDENT DETAILS ================= -->
+
+    <div class="report-card">
+
+        <h2>👨‍🎓 Student Details</h2>
+
+        <div class="info-grid">
+
+            <div class="info-box">
+
+                <span>Name</span>
+
+                <h4>
+
+                    <%= report.studentId ? report.studentId.name : "Unknown" %>
+
+                </h4>
+
+            </div>
+
+            <div class="info-box">
+
+                <span>Risk Score</span>
+
+                <h4>
+
+                    <%= report.riskScore %>
+
+                </h4>
+
+            </div>
+
+            <div class="info-box">
+
+                <span>Violation</span>
+
+                <h4>
+
+                    <%= report.violationType %>
+
+                </h4>
+
+            </div>
+
+            <div class="info-box">
+
+                <span>Generated</span>
+
+                <h4>
+
+                    <%= report.createdAt.toLocaleString() %>
+
+                </h4>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- ================= RISK METER ================= -->
+
+<div class="report-card">
+
+    <h2>📊 Risk Analysis</h2>
+
+    <div class="risk-meter">
+
+        <div class="risk-fill"
+             style="width: <%= report.riskScore %>%">
+
+        </div>
+
+    </div>
+
+    <div class="risk-footer">
+
+        <span>
+
+            Risk Score :
+            <strong><%= report.riskScore %>%</strong>
+
+        </span>
+
+        <% if(report.riskScore>=60){ %>
+
+            <span class="badge badge-high">
+
+                HIGH RISK
+
+            </span>
+
+        <% }else if(report.riskScore>=30){ %>
+
+            <span class="badge badge-medium">
+
+                MEDIUM RISK
+
+            </span>
+
+        <% }else{ %>
+
+            <span class="badge badge-low">
+
+                LOW RISK
+
+            </span>
+
+        <% } %>
+
+    </div>
+
+</div>
+
+
+
+    <!-- ================= AI SECURITY REPORT ================= -->
+
+    <div class="report-card">
+
+        <h2>🛡 AI Security Report</h2>
+
+        <p>
+
+            <strong>Threat Level :</strong>
+
+            <% if(report.threatLevel==="LOW"){ %>
+
+                <span class="badge badge-low">🟢 LOW</span>
+
+            <% } %>
+
+            <% if(report.threatLevel==="MEDIUM"){ %>
+
+                <span class="badge badge-medium">🟡 MEDIUM</span>
+
+            <% } %>
+
+            <% if(report.threatLevel==="HIGH"){ %>
+
+                <span class="badge badge-high">🔴 HIGH</span>
+
+            <% } %>
+
+        </p>
+
+
+        <div class="security-summary">
+
+            <div class="summary-box">
+
+                <span>Prediction</span>
+
+                <h4>
+
+                    <%= report.prediction %>
+
+                </h4>
+
+            </div>
+
+            <div class="summary-box">
+
+                <span>Confidence</span>
+
+                <h4>
+
+                    <%= report.confidence %>%
+
+                </h4>
+
+            </div>
+
+        </div>
+
+        <h3>📋 Reason</h3>
+
+        <div class="reason-list">
+
+        <% report.reason.forEach(item=>{ %>
+
+        <div class="reason-item">
+
+        <i class="fa-solid fa-circle-exclamation"></i>
+
+        <span><%= item %></span>
+
+        </div>
+
+        <% }) %>
+
+        </div>
+
+        
+
+        <div class="reason-list">
+
+        <% report.recommendation.forEach(item=>{ %>
+
+        <div class="reason-item">
+
+        <i class="fa-solid fa-circle-check"></i>
+
+        <span><%= item %></span>
+
+        </div>
+
+        <% }) %>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- ================= AI LEAK PREDICTION ================= -->
+
+    <div class="report-card">
+
+        <h2>🔐 AI Leak Prediction & Future Risk</h2>
+
+
+        <div class="security-summary">
+
+            <div class="summary-box">
+
+                <span>Leak Probability</span>
+
+                <h4>
+
+                    <%= report.leakPrediction %>
+
+                </h4>
+
+            </div>
+
+            <div class="summary-box">
+
+                <span>Future Risk</span>
+
+                <h4>
+
+                    <%= report.futureRisk %>
+
+                </h4>
+
+            </div>
+
+        </div>
+
+
+        <div class="summary-box" style="margin-top:20px;">
+
+            <span>Prediction</span>
+
+            <h4>
+
+                <%= report.leakPredictionText %>
+
+            </h4>
+
+        </div>
+
+
+        <h3>✅ Recommendation</h3>
+
+        <ul>
+
+            <% report.leakRecommendation.forEach(item=>{ %>
+
+                <li><%= item %></li>
+
+            <% }) %>
+
+        </ul>
+
+    </div>
+
+</div>

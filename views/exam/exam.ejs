@@ -1,0 +1,72 @@
+<% locals.page = "exam" %>
+<%- layout("/layouts/boilerplate") %>
+
+<!-- HEADER -->
+<div class="exam-header">
+    <div><strong><%= paper.title %></strong></div>
+    <div class="timer" id="timer">--:--</div>
+</div>
+
+<!-- PDF VIEW -->
+<div class="pdf-container">
+    <iframe 
+        src="/<%= decryptedFilePath %>#toolbar=0&navpanes=0"
+        width="100%" 
+        height="100%">
+    </iframe>
+</div>
+
+
+<script>
+document.addEventListener("DOMContentLoaded", function(){
+
+/* TIMER */
+const endTime = new Date("<%= paper.endTime %>").getTime();
+const form = document.getElementById("examForm");
+
+function updateTimer(){
+    const now = new Date().getTime();
+    const diff = endTime - now;
+
+    if(diff <= 0){
+        document.getElementById("timer").innerText = "Time Over";
+        alert("Time is over. Submitting exam.");
+        form.submit();
+        return;
+    }
+
+    const min = Math.floor(diff / 60000);
+    const sec = Math.floor((diff % 60000)/1000);
+
+    document.getElementById("timer").innerText =
+        `${min}:${sec < 10 ? '0'+sec : sec}`;
+}
+
+setInterval(updateTimer, 1000);
+
+setTimeout(() => {
+    alert("Time finished. Auto submitting...");
+    form.submit();
+}, endTime - Date.now());
+
+/* BASIC PROTECTION */
+
+// Disable right click
+document.addEventListener("contextmenu", e => e.preventDefault());
+
+// Disable shortcuts
+document.addEventListener("keydown", function(e) {
+    if (e.ctrlKey && ["s","p","u","c"].includes(e.key.toLowerCase())) {
+        e.preventDefault();
+    }
+});
+
+// Detect tab switching
+document.addEventListener("visibilitychange", () => {
+    if(document.hidden){
+        alert("Tab switching detected!");
+    }
+});
+
+});
+</script>

@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <!-- ================= META ================= -->
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1">
+
+    <meta name="theme-color"
+          content="#2563EB">
+
+    <title>
+        <%= locals.title || "Paper Security System" %>
+    </title>
+
+
+    <!-- ================= FAVICON ================= -->
+
+    <link rel="icon"
+          type="image/png"
+          href="/images/favicon.png">
+
+
+    <!-- ================= GOOGLE FONT ================= -->
+
+    <link rel="preconnect"
+          href="https://fonts.googleapis.com">
+
+    <link rel="preconnect"
+          href="https://fonts.gstatic.com"
+          crossorigin>
+
+
+    <!-- ================= BOOTSTRAP ================= -->
+
+    <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+        rel="stylesheet">
+
+
+    <!-- ================= FONT AWESOME ================= -->
+
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+
+    <!-- ================= GLOBAL CSS ================= -->
+
+    <link rel="stylesheet"
+          href="/css/style.css">
+
+    <link rel="stylesheet"
+          href="/css/navbar.css">
+
+    <link rel="stylesheet"
+          href="/css/table.css">
+
+    <link rel="stylesheet" 
+        href="/css/exam.css">
+
+    <link rel="stylesheet" 
+        href="/css/editPaper.css">
+
+    <!-- Google Fonts -->
+  <!-- <link rel="preconnect" href="https://fonts.googleapis.com"> -->
+  <!-- <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@600;700;800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet"> -->
+
+  <!-- Your existing CSS -->
+  <link rel="stylesheet" href="/css/dashboard.css">
+
+
+    <!-- ================= PAGE CSS ================= -->
+
+    <% if(locals.page){ %>
+
+        <link rel="stylesheet"
+              href="/css/<%= locals.page %>.css">
+
+    <% } %>
+
+</head>
+
+
+<body>
+
+    <!-- ================= NAVBAR ================= -->
+
+    <%- include("../partials/navbar.ejs") %>
+
+
+    <!-- ================= MAIN ================= -->
+
+    <main>
+
+        
+        <div class="container py-4">
+
+    <%- body %>
+
+</div>
+
+    </main>
+
+
+    <!-- ================= FOOTER ================= -->
+
+    <%- include("../partials/footer.ejs") %>
+
+
+    <!-- ================= BOOTSTRAP ================= -->
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+
+
+    <!-- ================= COMMON JS ================= -->
+
+    <% if(locals.script){ %>
+
+        <script src="/js/<%= locals.script %>.js"></script>
+
+    <% } %>
+
+</body>
+
+</html>

@@ -1,0 +1,123 @@
+<% locals.page = "history" %>
+<%- layout("/layouts/boilerplate") %>
+
+<div class="history-container">
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+
+        <h2 class="page-title mb-0">
+            Login History
+        </h2>
+
+    </div>
+
+    <div class="card">
+
+        <div class="table-responsive">
+
+            <table class="table history-table">
+
+                <thead>
+
+                    <tr>
+
+                        <th>User</th>
+                        <th>Email</th>
+                        <th>Device</th>
+                        <th>Login Time</th>
+                        <th>Logout Time</th>
+                        <th>Status</th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody>
+
+                <% if(history.length === 0){ %>
+
+                    <tr>
+
+                        <td colspan="6" class="text-center no-data">
+
+                            No login history available
+
+                        </td>
+
+                    </tr>
+
+                <% } %>
+
+                <% history.forEach(h=>{ %>
+
+                    <tr>
+
+                        <td>
+
+                            <strong><%= h.user?.name || "Unknown" %></strong>
+
+                        </td>
+
+                        <td>
+
+                            <%= h.user?.email || "N/A" %>
+
+                        </td>
+
+                        <td>
+
+                            <span class="history-device">
+
+                                <%= h.device || "Unknown" %>
+
+                            </span>
+
+                        </td>
+
+                        <td class="history-time">
+
+                            <%= new Date(h.loginTime).toLocaleString("en-IN") %>
+
+                        </td>
+
+                        <td class="history-time">
+
+                            <%= h.logoutTime ? new Date(h.logoutTime).toLocaleString("en-IN") : "-" %>
+
+                        </td>
+
+                        <td>
+
+                            <% if(h.logoutTime){ %>
+
+                                <span class="badge badge-inactive">
+
+                                    Logged Out
+
+                                </span>
+
+                            <% }else{ %>
+
+                                <span class="badge badge-active">
+
+                                    Active
+
+                                </span>
+
+                            <% } %>
+
+                        </td>
+
+                    </tr>
+
+                <% }) %>
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+</div>

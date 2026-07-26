@@ -1,0 +1,55 @@
+
+<% locals.page = "teachers" %>
+<%- layout("/layouts/boilerplate") %>
+
+
+
+<div class="container mt-4">
+
+<h2 class="page-title mb-4">
+<i class="fa-solid fa-user-plus me-2"></i>
+Add Teacher
+</h2>
+
+<div class="card shadow-sm p-4">
+
+<form action="/teachers" method="POST">
+
+<div class="mb-3">
+<label class="form-label">Teacher ID</label>
+<input type="text" name="teacherId" class="form-control" required>
+</div>
+
+<div class="mb-3">
+<label class="form-label">Department</label>
+<input type="text" name="department" class="form-control" required>
+</div>
+
+<div class="mb-3">
+<label class="form-label">Designation</label>
+<input type="text" name="designation" class="form-control" required>
+</div>
+
+<div class="mb-3">
+<label class="form-label">Qualification</label>
+<input type="text" name="qualification" class="form-control" required>
+</div>
+
+<div class="mb-3">
+<label class="form-label">Experience (Years)</label>
+<input type="number" name="experienceYears" class="form-control">
+</div>
+
+<button class="btn btn-success rounded-pill px-4">
+Create Teacher
+</button>
+
+<a href="/teachers" class="btn btn-secondary rounded-pill px-4">
+Cancel
+</a>
+
+</form>
+
+</div>
+
+</div>

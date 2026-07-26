@@ -1,0 +1,47 @@
+<% locals.page = "students" %>
+<%- layout("/layouts/boilerplate") %>
+
+
+
+<div class="edit-container">
+
+<h2>Edit Student</h2>
+
+<form action="/students/<%= student._id %>?_method=PUT" method="POST" class="form-box">
+
+<div class="form-group">
+<label>Enrollment Number</label>
+<input type="text" name="enrollmentNumber" value="<%= student.enrollmentNumber %>" required>
+</div>
+
+<div class="form-group">
+<label>Department</label>
+<input type="text" name="department" value="<%= student.department %>" required>
+</div>
+
+<div class="form-group">
+<label>Semester</label>
+<input type="number" name="semester" min="1" max="8" value="<%= student.semester %>" required>
+</div>
+
+<div class="form-group">
+<label>Status</label>
+<select name="isBlocked">
+
+<option value="false" <%= !student.isBlocked ? "selected" : "" %>>Active</option>
+
+<option value="true" <%= student.isBlocked ? "selected" : "" %>>Blocked</option>
+
+</select>
+</div>
+
+<div class="form-group">
+<label>Suspicious Activity Count</label>
+<input type="number" name="suspiciousActivityCount" value="<%= student.suspiciousActivityCount %>">
+</div>
+
+<button class="btn-save">Update Student</button>
+
+</form>
+
+</div>

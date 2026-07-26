@@ -1,0 +1,242 @@
+<% locals.page = "students" %>
+<% locals.title = "Student Management" %>
+
+<%- layout("/layouts/boilerplate") %>
+
+<!-- ================= HEADER ================= -->
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+
+    <div>
+
+        <h2 class="page-title mb-1">
+
+            Student Management
+
+        </h2>
+
+        <p class="text-muted mb-0">
+
+            Manage student records, enrollment details and account status.
+
+        </p>
+
+    </div>
+
+    <a href="/students/new" class="btn btn-add">
+
+        <i class="fa-solid fa-user-plus me-2"></i>
+
+        Add Student
+
+    </a>
+
+</div>
+
+<!-- ================= TABLE ================= -->
+
+<div class="card">
+
+<div class="table-responsive">
+
+<table class="table table-hover align-middle">
+
+<thead>
+
+<tr>
+
+<th>Name</th>
+
+<th>Email</th>
+
+<th>Enrollment</th>
+
+<th>Department</th>
+
+<th>Semester</th>
+
+<th>Status</th>
+
+<th>Last Login</th>
+
+<th class="text-center">
+
+Actions
+
+</th>
+
+</tr>
+
+</thead>
+
+<tbody>
+
+<% if(students.length===0){ %>
+
+<tr>
+
+<td colspan="8" class="text-center no-data">
+
+<i class="fa-solid fa-user-graduate fa-2x mb-3 text-secondary"></i>
+
+<br>
+
+No students found.
+
+</td>
+
+</tr>
+
+<% } %>
+
+<% students.forEach(s=>{ %>
+
+<tr>
+
+<!-- Name -->
+
+<td>
+
+<strong>
+
+<%= s.user?.name || "N/A" %>
+
+</strong>
+
+</td>
+
+<!-- Email -->
+
+<td>
+
+<%= s.user?.email || "N/A" %>
+
+</td>
+
+<!-- Enrollment -->
+
+<td>
+
+<span class="badge badge-student">
+
+<%= s.enrollmentNumber %>
+
+</span>
+
+</td>
+
+<!-- Department -->
+
+<td>
+
+<%= s.department %>
+
+</td>
+
+<!-- Semester -->
+
+<td>
+
+Semester <%= s.semester %>
+
+</td>
+
+<!-- Status -->
+
+<td>
+
+<span class="badge <%= s.isBlocked ? 'badge-inactive' : 'badge-active' %>">
+
+<%= s.isBlocked ? "Blocked" : "Active" %>
+
+</span>
+
+</td>
+
+<!-- Last Login -->
+
+<td>
+
+<%= s.lastLogin
+
+? s.lastLogin.toLocaleDateString("en-IN")
+
+: "Never"
+
+%>
+
+</td>
+
+<!-- Actions -->
+
+<td>
+
+<div class="paper-actions">
+
+<!-- View -->
+
+<a href="/students/<%= s._id %>"
+
+class="btn btn-view btn-sm">
+
+<i class="fa-solid fa-eye me-1"></i>
+
+View
+
+</a>
+
+<!-- Edit & Delete -->
+
+<% if(session && (session.role==="Admin" || session.userId.toString()===s.user?._id?.toString())){ %>
+
+<a href="/students/<%= s._id %>/edit"
+
+class="btn btn-edit btn-sm">
+
+<i class="fa-solid fa-pen-to-square me-1"></i>
+
+Edit
+
+</a>
+
+<form
+
+action="/students/<%= s._id %>?_method=DELETE"
+
+method="POST"
+
+class="d-inline">
+
+<button
+
+type="submit"
+
+class="btn btn-delete btn-sm"
+
+onclick="return confirm('Delete this student?')">
+
+<i class="fa-solid fa-trash me-1"></i>
+
+Delete
+
+</button>
+
+</form>
+
+<% } %>
+
+</div>
+
+</td>
+
+</tr>
+
+<% }) %>
+
+</tbody>
+
+</table>
+
+</div>
+
+</div>

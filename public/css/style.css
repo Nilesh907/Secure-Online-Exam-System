@@ -1,0 +1,460 @@
+/* ==================================================
+                    GOOGLE FONT
+================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
+/* ==================================================
+                    VARIABLES
+================================================== */
+
+:root{
+
+    --primary:#2563EB;
+    --primary-dark:#1D4ED8;
+
+    --success:#22C55E;
+    --warning:#F59E0B;
+    --danger:#EF4444;
+
+    --background:#F8FAFC;
+    --surface:#FFFFFF;
+
+    --text:#0F172A;
+    --text-light:#64748B;
+
+    --border:#E2E8F0;
+
+    --radius:16px;
+
+    --shadow:0 10px 30px rgba(15,23,42,.06);
+
+    --transition:all .25s ease;
+
+}
+
+/* ==================================================
+                    RESET
+================================================== */
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+html{
+
+    font-size:16px;
+
+    scroll-behavior:smooth;
+
+}
+
+body{
+
+    font-family:'Inter',sans-serif;
+
+    background:var(--background);
+
+    color:var(--text);
+
+    font-size:15px;
+
+    line-height:1.6;
+
+    overflow-x:hidden;
+
+    animation:pageFade .35s ease;
+
+}
+
+
+.container{
+
+    max-width:1400px;
+
+    margin:0 auto;
+
+    padding:0 20px;
+
+}
+
+
+
+/* ==================================================
+                    TITLES
+================================================== */
+
+.page-title{
+
+    font-size:36px;
+
+    font-weight:700;
+
+    color:#0F172A;
+
+    margin-bottom:28px;
+
+}
+
+.section-heading{
+
+    margin-bottom:30px;
+
+}
+
+.section-heading h2{
+
+    font-size:34px;
+
+    font-weight:700;
+
+}
+
+.section-heading p{
+
+    color:#64748B;
+
+    margin-top:5px;
+
+}
+
+/* ==================================================
+                    HEADINGS
+================================================== */
+
+h1{
+
+    font-size:42px;
+
+    font-weight:800;
+
+}
+
+h2{
+
+    font-size:32px;
+
+    font-weight:700;
+
+}
+
+h3{
+
+    font-size:24px;
+
+    font-weight:700;
+
+}
+
+h4{
+
+    font-size:20px;
+
+    font-weight:600;
+
+}
+
+p{
+
+    color:#64748B;
+
+}
+
+/* ==================================================
+                    CARD
+================================================== */
+
+.card{
+
+    background:#FFFFFF;
+
+    border:none;
+
+    border-radius:18px;
+
+    box-shadow:0 8px 24px rgba(15,23,42,.06);
+
+    overflow:hidden;
+
+    width:100%;
+
+    transition:var(--transition);
+
+}
+
+.card:hover{
+
+    transform:translateY(-2px);
+
+    box-shadow:0 16px 36px rgba(15,23,42,.08);
+
+}
+
+/* ==================================================
+                    BUTTONS
+================================================== */
+
+.btn{
+
+    border:none;
+
+    border-radius:10px;
+
+    font-weight:600;
+
+    transition:var(--transition);
+
+    cursor:pointer;
+
+}
+
+.btn:hover{
+
+    transform:translateY(-2px);
+
+}
+
+.btn:active{
+
+    transform:scale(.98);
+
+}
+
+/* Add */
+
+.btn-add{
+
+    background:#16A34A;
+
+    color:#fff;
+
+    height:42px;
+
+    padding:0 18px;
+
+    display:inline-flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+}
+
+.btn-add:hover{
+
+    background:#15803D;
+
+}
+
+/* View */
+
+.btn-view{
+
+    background:#2563EB;
+
+    color:#fff;
+
+}
+
+.btn-view:hover{
+
+    background:#1D4ED8;
+
+}
+
+/* Edit */
+
+.btn-edit{
+
+    background:#F59E0B;
+
+    color:#fff;
+
+}
+
+.btn-edit:hover{
+
+    background:#D97706;
+
+}
+
+/* Delete */
+
+.btn-delete{
+
+    background:#EF4444;
+
+    color:#fff;
+
+}
+
+.btn-delete:hover{
+
+    background:#DC2626;
+
+}
+
+/* ==================================================
+                    BADGES
+================================================== */
+
+.badge{
+
+    display:inline-flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    border-radius:999px;
+
+    padding:8px 16px;
+
+    font-size:12px;
+
+    font-weight:700;
+
+}
+
+/* ==================================================
+                    TABLE
+================================================== */
+
+.table-responsive{
+
+    border-radius:18px;
+
+    overflow:hidden;
+
+}
+
+/* ==================================================
+                    LINKS
+================================================== */
+
+a{
+
+    text-decoration:none;
+
+    color:inherit;
+
+    transition:color .25s ease;
+
+}
+
+a:hover{
+
+    text-decoration:none;
+
+}
+
+/* ==================================================
+                    FORMS
+================================================== */
+
+.form-control,
+.form-select{
+
+    height:48px;
+
+    border-radius:10px;
+
+    border:1px solid #E2E8F0;
+
+    transition:var(--transition);
+
+}
+
+.form-control:hover,
+.form-select:hover{
+
+    border-color:#CBD5E1;
+
+}
+
+.form-control:focus,
+.form-select:focus{
+
+    border-color:#2563EB;
+
+    box-shadow:0 0 0 4px rgba(37,99,235,.10);
+
+}
+
+/* ==================================================
+                    UTILITIES
+================================================== */
+
+.rounded-lg{
+
+    border-radius:18px;
+
+}
+
+.shadow-sm{
+
+    box-shadow:var(--shadow)!important;
+
+}
+
+.no-data{
+
+    text-align:center;
+
+    color:#64748B;
+
+    padding:40px;
+
+}
+
+/* ==================================================
+                    TEXT SELECTION
+================================================== */
+
+::selection{
+
+    background:#2563EB;
+
+    color:#FFFFFF;
+
+}
+
+/* ==================================================
+                    PAGE ANIMATION
+================================================== */
+
+@keyframes pageFade{
+
+    from{
+
+        opacity:0;
+
+        transform:translateY(8px);
+
+    }
+
+    to{
+
+        opacity:1;
+
+        transform:translateY(0);
+
+    }
+
+}
+
+/* ==================================================
+                    RESPONSIVE
+================================================== */
+
+@media(max-width:1400px){
+
+.container{
+
+max-width:1200px;
+
+}
+
+}

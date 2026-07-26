@@ -1,0 +1,19 @@
+/* ==========================================
+            STUDENTS TABLE
+========================================== */
+
+.table th:nth-child(6),
+.table td:nth-child(6){
+
+    width:150px;
+    text-align:center;
+
+}
+
+.table th:last-child,
+.table td:last-child{
+
+    width:300px;
+    text-align:center;
+
+}

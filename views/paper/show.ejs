@@ -1,0 +1,249 @@
+<% locals.page = "papers" %>
+<%- layout("/layouts/boilerplate") %>
+
+
+<h2 class="page-title">Paper Details</h2>
+
+<div class="detail-card">
+
+<!-- ================= BASIC INFO ================= -->
+
+<h4>Basic Information</h4>
+
+<p><strong>Title:</strong> <%= paper.title %></p>
+<p><strong>Subject:</strong> <%= paper.subject %></p>
+<p><strong>Department:</strong> <%= paper.department %></p>
+
+<hr>
+
+<!-- ================= STATUS ================= -->
+
+<h4>Status</h4>
+
+<p>
+<strong>Status:</strong>
+
+<span class="badge
+<%= paper.status === 'APPROVED'
+? 'badge-active'
+: paper.status === 'UNDER_REVIEW'
+? 'badge-warning'
+: 'badge-inactive' %>">
+
+<%= paper.status %>
+
+</span>
+</p>
+
+<% if (paper.status === "SCHEDULED") { %>
+
+<p>
+<strong>Exam Start:</strong>
+<%= paper.startTime.toLocaleString() %>
+</p>
+
+<p>
+<strong>Exam End:</strong>
+<%= paper.endTime.toLocaleString() %>
+</p>
+
+<% const now = new Date(); %>
+
+<% if (currentUser.role === "Student") { %>
+
+    <% if (
+        now >= paper.startTime &&
+        now <= paper.endTime
+    ) { %>
+
+        <a
+        href="/exam/<%= paper._id %>/token"
+        class="btn btn-success"
+        >
+        Generate Token
+        </a>
+
+    <% } else { %>
+
+        <button class="btn btn-secondary">
+            Exam Not Started
+        </button>
+
+    <% } %>
+
+<% } %>
+
+<% } %>
+
+<!-- ================= ACTIONS ================= -->
+
+<div class="mt-3">
+
+<% if (
+    currentUser.role === "Teacher" &&
+    paper.status === "SUBMITTED"
+) { %>
+
+<form action="/papers/<%= paper._id %>/submit" method="POST">
+  <button class="btn btn-primary">
+    Submit To Reviewer
+  </button>
+</form>
+
+<% } %>
+
+
+<!-- ================= NEW: CORRECTION FLOW ================= -->
+
+<% if (
+    currentUser.role === "Teacher" &&
+    paper.status === "NEEDS_CORRECTION"
+) { %>
+
+  <a
+    href="/papers/<%= paper._id %>/edit"
+    class="btn btn-warning"
+  >
+    Edit Paper
+  </a>
+
+  <form
+    action="/papers/<%= paper._id %>/resubmit"
+    method="POST"
+    class="d-inline"
+  >
+    <button class="btn btn-success">
+      Resubmit to Reviewer
+    </button>
+  </form>
+
+<% } %>
+
+
+<% if (
+    currentUser.role === "Admin" &&
+    paper.status === "APPROVED"
+) { %>
+
+<a
+  href="/admin/papers/<%= paper._id %>/schedule"
+  class="btn btn-warning"
+>
+Schedule Exam
+</a>
+
+<% } %>
+
+</div>
+
+<!-- ================= OWNER INFO ================= -->
+
+<p>
+<strong>Uploaded By:</strong>
+<%= paper.uploadedBy?.name || "N/A" %>
+</p>
+
+<p>
+<strong>Reviewed By:</strong>
+<%= paper.reviewedBy?.name || "Not Assigned" %>
+</p>
+
+<hr>
+
+<!-- ================= SECURITY INFO ================= -->
+
+<h4>Security Info</h4>
+
+<p>
+<strong>Watermark:</strong>
+<%= paper.watermarkText || "None" %>
+</p>
+
+<p>
+<strong>Last Viewed:</strong>
+
+<%= paper.lastViewedAt
+? paper.lastViewedAt.toLocaleString()
+: "Never" %>
+
+</p>
+
+<hr>
+
+<!-- ================= FILE ================= -->
+
+<h4>File</h4>
+
+<% if (paper.encryptedFilePath) { %>
+
+<p>File uploaded successfully</p>
+
+<% if (
+currentUser.role === "Admin" ||
+currentUser.role === "Teacher" ||
+currentUser.role === "Reviewer"
+) { %>
+
+<a
+href="/papers/<%= paper._id %>/view"
+class="btn btn-view"
+>
+View Paper
+</a>
+
+<% } %>
+
+<% } else { %>
+
+<p>No file uploaded</p>
+
+<% } %>
+
+<hr>
+
+<!-- ================= INSTRUCTIONS ================= -->
+
+<h4>Instructions</h4>
+
+<ul>
+<li>Duration: 60 Minutes</li>
+<li>No Tab Switching</li>
+<li>Auto Submit After Time Ends</li>
+</ul>
+
+<hr>
+
+<!-- ================= REVIEWER COMMENT ================= -->
+
+<% if (paper.status === "NEEDS_CORRECTION") { %>
+
+<div class="alert alert-danger mt-3">
+
+<h5>Correction Required</h5>
+
+<p><strong>Reviewer Comment:</strong></p>
+
+<div class="p-3 bg-light border rounded">
+<%= paper.reviewComment %>
+</div>
+
+</div>
+
+<hr>
+
+<% } %>
+
+<!-- ================= BACK ================= -->
+
+<div class="mt-3">
+
+<a
+href="/papers"
+class="btn btn-secondary"
+>
+Back
+</a>
+
+</div>
+
+</div>

@@ -1,0 +1,35 @@
+<% locals.page = "login" %>
+<%- layout("/layouts/boilerplate") %>
+
+
+
+<div class="container mt-5 login-container">
+
+  <div class="card p-4 login-card">
+    <h3 class="text-center mb-3">Login</h3>
+
+    <form action="/auth/login" method="POST">
+
+      <div class="mb-3">
+        <label>Email</label>
+        <input type="email" name="email" class="form-control" required>
+      </div>
+
+      <div class="mb-3">
+        <label>Password</label>
+        <input type="password" name="password" class="form-control" required>
+      </div>
+
+      <button class="btn btn-view w-100">Login</button>
+
+    </form>
+    
+
+    <p class="text-center mt-3">
+      Don’t have an account?
+      <a href="/auth/register">Register</a>
+    </p>
+
+  </div>
+
+</div>

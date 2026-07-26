@@ -1,0 +1,210 @@
+<% locals.page = "users" %>
+<% locals.title = "User Management" %>
+
+<%- layout("/layouts/boilerplate") %>
+
+<!-- ================= HEADER ================= -->
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+
+    <div>
+
+        <h2 class="page-title mb-1">
+
+            User Management
+
+        </h2>
+
+        <p class="text-muted mb-0">
+
+            Manage users, roles and account status across the platform.
+
+        </p>
+
+    </div>
+
+    <a href="/users/new" class="btn btn-add">
+
+        <i class="fa-solid fa-user-plus me-2"></i>
+
+        Add User
+
+    </a>
+
+</div>
+
+<!-- ================= TABLE ================= -->
+
+<div class="card">
+
+<div class="table-responsive">
+
+<table class="table table-hover align-middle">
+
+<thead>
+
+<tr>
+
+<th>Name</th>
+
+<th>Email</th>
+
+<th>Role</th>
+
+<th>Status</th>
+
+<th>Last Login</th>
+
+<th class="text-center">Actions</th>
+
+</tr>
+
+</thead>
+
+<tbody>
+
+<% if(users.length===0){ %>
+
+<tr>
+
+<td colspan="6" class="text-center no-data">
+
+<i class="fa-regular fa-user fa-2x mb-3 text-secondary"></i>
+
+<br>
+
+No users found.
+
+</td>
+
+</tr>
+
+<% } %>
+
+<% users.forEach(u=>{ %>
+
+<tr>
+
+<!-- Name -->
+
+<td>
+
+<strong>
+
+<%= u.name %>
+
+</strong>
+
+</td>
+
+<!-- Email -->
+
+<td>
+
+<%= u.email %>
+
+</td>
+
+<!-- Role -->
+
+<td>
+
+<span class="badge badge-<%= u.role.toLowerCase() %>">
+
+<%= u.role %>
+
+</span>
+
+</td>
+
+<!-- Status -->
+
+<td>
+
+<span class="badge <%= u.isActive ? 'badge-active':'badge-inactive' %>">
+
+<%= u.isActive ? "Active":"Inactive" %>
+
+</span>
+
+</td>
+
+<!-- Last Login -->
+
+<td>
+
+<%= u.lastLogin
+? new Date(u.lastLogin).toLocaleString("en-IN",{
+dateStyle:"medium",
+timeStyle:"short"
+})
+: "Never"
+%>
+
+</td>
+
+<!-- Actions -->
+
+<td>
+
+<div class="paper-actions">
+
+<a href="/users/<%= u._id %>"
+
+class="btn btn-view btn-sm">
+
+<i class="fa-solid fa-eye me-1"></i>
+
+View
+
+</a>
+
+<a href="/users/<%= u._id %>/edit"
+
+class="btn btn-edit btn-sm">
+
+<i class="fa-solid fa-pen-to-square me-1"></i>
+
+Edit
+
+</a>
+
+<form
+
+action="/users/<%= u._id %>?_method=DELETE"
+
+method="POST"
+
+class="d-inline">
+
+<button
+
+type="submit"
+
+class="btn btn-delete btn-sm"
+
+onclick="return confirm('Delete this user?')">
+
+<i class="fa-solid fa-trash me-1"></i>
+
+Delete
+
+</button>
+
+</form>
+
+</div>
+
+</td>
+
+</tr>
+
+<% }) %>
+
+</tbody>
+
+</table>
+
+</div>
+
+</div>

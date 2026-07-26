@@ -1,0 +1,35 @@
+<% locals.page = "students" %>
+<%- layout("/layouts/boilerplate") %>
+
+
+
+<h2>Create New Student</h2>
+
+<form action="/students" method="POST" class="form-box">
+
+<div class="form-group">
+<label>Enrollment Number</label>
+<input type="text" name="enrollmentNumber" required>
+</div>
+
+<div class="form-group">
+<label>Department</label>
+<input type="text" name="department" required>
+</div>
+
+<div class="form-group">
+<label>Semester</label>
+<input type="number" name="semester" min="1" max="8" required>
+</div>
+
+<div class="form-group">
+<label>Status</label>
+<select name="isBlocked">
+<option value="false">Active</option>
+<option value="true">Blocked</option>
+</select>
+</div>
+
+<button class="btn-save">Create Student</button>
+
+</form>

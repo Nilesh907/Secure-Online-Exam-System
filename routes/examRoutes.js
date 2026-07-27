@@ -6,7 +6,7 @@ const examSessionMiddleware = require("../middleware/examSessionMiddleware");
 
 const { isLoggedIn, checkRole } = require("../middleware/authMiddleware");
 
-const examViolationController = require("../controllers/examViolationController");
+const examViolationController = require("../Controllers/examViolationController");
 
 
 

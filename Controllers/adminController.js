@@ -63,3 +63,24 @@ exports.scheduleExam = async (req, res) => {
         res.status(500).send("Scheduling failed");
     }
 };
+
+exports.viewReport = async (req, res) => {
+    try {
+
+        const report = await AIReport
+            .findById(req.params.id)
+            .populate("studentId");
+
+        if (!report) {
+            return res.status(404).send("AI Report not found");
+        }
+
+        res.render("admin/report", {
+            report
+        });
+
+    } catch (err) {
+        console.log(err);
+        res.status(500).send("Something went wrong");
+    }
+};

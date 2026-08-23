@@ -101,6 +101,7 @@ app.use((req, res, next) => {
 app.engine("ejs", ejsMate);
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
+app.set("trust proxy", 1);
 
 // ================= STATIC =================
 

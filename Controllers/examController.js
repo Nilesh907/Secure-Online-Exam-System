@@ -49,14 +49,6 @@ exports.generateToken = async (req, res) => {
             return res.send("Token allowed only 2 minutes before exam");
         }
 
-
-        if (now > paper.endTime) {
-            return res.send(
-                "Exam has already ended"
-            );
-
-        }
-
         let session = await ExamSession.findOne({
             student: req.session.userId,
             paper: paper._id,

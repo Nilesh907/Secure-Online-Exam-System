@@ -47,24 +47,20 @@
 <%= paper.endTime.toLocaleString() %>
 </p>
 
+<% const now = new Date(); %>
+
 <% if (currentUser.role === "Student") { %>
 
-    <% 
-        const nowMs = Date.now();
-        const startMs = new Date(paper.startTime).getTime();
-        const endMs = new Date(paper.endTime).getTime();
-    %>
-
     <% if (
-        nowMs >= startMs &&
-        nowMs <= endMs
+        now >= paper.startTime &&
+        now <= paper.endTime
     ) { %>
 
         <a
-            href="/exam/<%= paper._id %>/token"
-            class="btn btn-success"
+        href="/exam/<%= paper._id %>/token"
+        class="btn btn-success"
         >
-            Generate Token
+        Generate Token
         </a>
 
     <% } else { %>
@@ -76,6 +72,9 @@
     <% } %>
 
 <% } %>
+
+<% } %>
+
 <!-- ================= ACTIONS ================= -->
 
 <div class="mt-3">

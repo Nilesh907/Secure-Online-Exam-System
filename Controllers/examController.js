@@ -55,6 +55,8 @@ exports.generateToken = async (req, res) => {
                 "Exam has already ended"
             );
 
+        }
+
         let session = await ExamSession.findOne({
             student: req.session.userId,
             paper: paper._id,

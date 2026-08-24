@@ -39,28 +39,40 @@
 
 <p>
 <strong>Exam Start:</strong>
-<%= paper.startTime.toLocaleString() %>
+<%= paper.startTime.toLocaleString("en-IN", {
+    timeZone: "Asia/Kolkata",
+    dateStyle: "medium",
+    timeStyle: "short"
+}) %>
 </p>
 
 <p>
 <strong>Exam End:</strong>
-<%= paper.endTime.toLocaleString() %>
+<%= paper.endTime.toLocaleString("en-IN", {
+    timeZone: "Asia/Kolkata",
+    dateStyle: "medium",
+    timeStyle: "short"
+}) %>
 </p>
 
 <% const now = new Date(); %>
 
 <% if (currentUser.role === "Student") { %>
 
+    <% const tokenAllowedTime = new Date(
+        paper.startTime.getTime() - 2 * 60 * 1000
+    ); %>
+
     <% if (
-        now >= paper.startTime &&
+        now >= tokenAllowedTime &&
         now <= paper.endTime
     ) { %>
 
         <a
-        href="/exam/<%= paper._id %>/token"
-        class="btn btn-success"
+            href="/exam/<%= paper._id %>/token"
+            class="btn btn-success"
         >
-        Generate Token
+            Generate Token
         </a>
 
     <% } else { %>
@@ -70,8 +82,6 @@
         </button>
 
     <% } %>
-
-<% } %>
 
 <% } %>
 
@@ -163,8 +173,12 @@ Schedule Exam
 <strong>Last Viewed:</strong>
 
 <%= paper.lastViewedAt
-? paper.lastViewedAt.toLocaleString()
-: "Never" %>
+    ? paper.lastViewedAt.toLocaleString("en-IN", {
+        timeZone: "Asia/Kolkata",
+        dateStyle: "medium",
+        timeStyle: "short"
+    })
+    : "Never" %>
 
 </p>
 

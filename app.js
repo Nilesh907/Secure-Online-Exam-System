@@ -57,21 +57,6 @@ app.use(session({
 }));
 
 
-
-app.use((req, res, next) => {
-
-    console.log("\n========== SESSION DEBUG ==========");
-
-    console.log("Session ID :", req.sessionID);
-
-    console.log("Session :", req.session);
-
-    console.log("===================================\n");
-
-    next();
-
-});
-
 // ================= SECURITY =================
 
 app.use(helmet({
@@ -110,6 +95,16 @@ app.use("/uploads", express.static("uploads"));
 app.use("/temp", express.static("temp"));
 
 app.use(compression());
+
+// ================= HEALTH CHECK =================
+
+app.get("/health", (req, res) => {
+    res.status(200).json({
+        status: "ok",
+        uptime: process.uptime(),
+        timestamp: new Date().toISOString()
+    });
+});
 
 // ================= ROUTES =================
 

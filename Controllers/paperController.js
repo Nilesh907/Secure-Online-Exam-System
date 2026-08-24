@@ -15,51 +15,74 @@ const AuditLog = require("../models/AuditLog");
 
 
 //GET ALL  PAPERS  /papers
+// ====================== GET ALL PAPERS ======================
+// GET /papers
 
 module.exports.index = async (req, res) => {
     try {
         let papers = [];
-        const now = new Date();
 
         console.log("ROLE:", req.session.role);
         console.log("USER:", req.session.userId);
 
         // ================= ADMIN =================
         if (req.session.role === "Admin") {
+
             papers = await Paper.find()
-                .populate("uploadedBy")
-                .populate("reviewedBy");
+                .select(
+                    "title subject department status uploadedBy reviewedBy lastViewedAt createdAt startTime endTime"
+                )
+                .populate("uploadedBy", "name")
+                .populate("reviewedBy", "name")
+                .lean();
+
         }
 
         // ================= TEACHER =================
         else if (req.session.role === "Teacher") {
-            
+
             papers = await Paper.find()
-                .populate("uploadedBy")
-                .populate("reviewedBy");
+                .select(
+                    "title subject department status uploadedBy reviewedBy lastViewedAt createdAt startTime endTime"
+                )
+                .populate("uploadedBy", "name")
+                .populate("reviewedBy", "name")
+                .lean();
+
         }
 
         // ================= REVIEWER =================
         else if (req.session.role === "Reviewer") {
-            
+
             papers = await Paper.find({
                 status: "UNDER_REVIEW"
             })
-            .populate("uploadedBy")
-            .populate("reviewedBy");
+                .select(
+                    "title subject department status uploadedBy reviewedBy lastViewedAt createdAt startTime endTime"
+                )
+                .populate("uploadedBy", "name")
+                .populate("reviewedBy", "name")
+                .lean();
+
         }
 
         // ================= STUDENT =================
         else if (req.session.role === "Student") {
-            
-            papers = await Paper.find({
-                status: "SCHEDULED",
-            })
-            .populate("uploadedBy")
-            .populate("reviewedBy");
 
-            console.log("NOW:", now);
-            console.log("STUDENT PAPERS COUNT:", papers.length);
+            papers = await Paper.find({
+                status: "SCHEDULED"
+            })
+                .select(
+                    "title subject department status uploadedBy reviewedBy lastViewedAt createdAt startTime endTime"
+                )
+                .populate("uploadedBy", "name")
+                .populate("reviewedBy", "name")
+                .lean();
+
+            console.log(
+                "STUDENT PAPERS COUNT:",
+                papers.length
+            );
         }
 
         // ================= DEFAULT =================
@@ -73,7 +96,12 @@ module.exports.index = async (req, res) => {
         });
 
     } catch (err) {
-        console.log("Error fetching papers:", err);
+
+        console.log(
+            "Error fetching papers:",
+            err
+        );
+
         res.status(500).send("Server Error");
     }
 };

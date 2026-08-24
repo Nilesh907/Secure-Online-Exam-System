@@ -16,27 +16,59 @@ exports.scheduleExam = async (req, res) => {
             return res.status(404).send("Paper not found");
         }
 
-        // Must be approved before scheduling
         if (paper.status !== "APPROVED") {
             return res.status(400).send("Paper must be approved first");
         }
 
-        // datetime-local does not contain timezone.
-        // Treat admin-entered time as India Standard Time (IST).
-        const start = new Date(`${startTime}:00+05:30`);
-        const end = new Date(`${endTime}:00+05:30`);
+        /*
+         * datetime-local gives:
+         * 2026-08-24T22:34
+         *
+         * It has no timezone.
+         *
+         * We explicitly treat the admin's entered time as IST.
+         */
 
-        // Validate dates
-        if (isNaN(start.getTime()) || isNaN(end.getTime())) {
-            return res.status(400).send("Invalid exam date or time");
+        const start = new Date(
+            `${startTime}:00+05:30`
+        );
+
+        const end = new Date(
+            `${endTime}:00+05:30`
+        );
+
+        if (
+            Number.isNaN(start.getTime()) ||
+            Number.isNaN(end.getTime())
+        ) {
+            return res.status(400).send("Invalid exam date/time");
         }
 
-        // End time must be after start time
         if (end <= start) {
-            return res.status(400).send("Exam end time must be after start time");
+            return res.status(400).send(
+                "Exam end time must be after start time"
+            );
         }
 
-        // IMPORTANT: save the converted dates
+        console.log("========== EXAM SCHEDULING ==========");
+        console.log("Received startTime:", startTime);
+        console.log("Received endTime:", endTime);
+        console.log("Saved startTime UTC:", start.toISOString());
+        console.log("Saved endTime UTC:", end.toISOString());
+        console.log(
+            "Saved startTime IST:",
+            start.toLocaleString("en-IN", {
+                timeZone: "Asia/Kolkata"
+            })
+        );
+        console.log(
+            "Saved endTime IST:",
+            end.toLocaleString("en-IN", {
+                timeZone: "Asia/Kolkata"
+            })
+        );
+        console.log("=====================================");
+
         paper.startTime = start;
         paper.endTime = end;
         paper.status = "SCHEDULED";
@@ -50,7 +82,6 @@ exports.scheduleExam = async (req, res) => {
         res.status(500).send("Scheduling failed");
     }
 };
-
 
 // ====================== ADMIN AI DASHBOARD ======================
 exports.dashboard = async (req, res) => {

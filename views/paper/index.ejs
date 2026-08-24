@@ -3,6 +3,7 @@
 
 <%- layout("/layouts/boilerplate") %>
 
+
 <!-- ================= HEADER ================= -->
 
 <div class="d-flex justify-content-between align-items-center mb-4">
@@ -10,20 +11,17 @@
     <div>
 
         <h2 class="page-title mb-1">
-
             Paper Management
-
         </h2>
 
         <p class="text-muted mb-0">
-
             Manage, review and securely access examination papers.
-
         </p>
 
     </div>
 
-    <% if(currentUser?.role==="Admin" || currentUser?.role==="Teacher"){ %>
+
+    <% if (currentUser?.role === "Admin" || currentUser?.role === "Teacher") { %>
 
         <a href="/papers/new" class="btn btn-add">
 
@@ -37,279 +35,309 @@
 
 </div>
 
+
 <!-- ================= TABLE ================= -->
 
 <div class="card">
 
-<div class="table-responsive">
+    <div class="table-responsive">
 
-<table class="table table-hover align-middle">
+        <table class="table table-hover align-middle">
 
-<thead>
+            <thead>
 
-<tr>
+                <tr>
 
-<th>Title</th>
+                    <th>Title</th>
 
-<th>Subject</th>
+                    <th>Subject</th>
 
-<th>Department</th>
+                    <th>Department</th>
 
-<th>Status</th>
+                    <th>Status</th>
 
-<th>Uploaded By</th>
+                    <th>Uploaded By</th>
 
-<th>Reviewed By</th>
+                    <th>Reviewed By</th>
 
-<th>Last Viewed</th>
+                    <th>Last Viewed</th>
 
-<th>Created</th>
+                    <th>Created</th>
 
-<th class="text-center">Actions</th>
+                    <th class="text-center">Actions</th>
 
-</tr>
+                </tr>
 
-</thead>
+            </thead>
 
-<tbody>
 
-<% if(papers.length===0){ %>
+            <tbody>
 
-<tr>
+                <% if (papers.length === 0) { %>
 
-<td colspan="9" class="text-center no-data">
+                    <tr>
 
-<i class="fa-regular fa-folder-open fa-2x mb-3 text-secondary"></i>
+                        <td colspan="9" class="text-center no-data">
 
-<br>
+                            <i class="fa-regular fa-folder-open fa-2x mb-3 text-secondary"></i>
 
-No papers available.
+                            <br>
 
-</td>
+                            No papers available.
 
-</tr>
+                        </td>
 
-<% } %>
+                    </tr>
 
-<% papers.forEach(p=>{ %>
+                <% } %>
 
-<tr>
 
-<!-- Title -->
+                <% papers.forEach(p => { %>
 
-<td>
+                    <tr>
 
-<strong>
+                        <!-- Title -->
 
-<%= p.title %>
+                        <td>
 
-</strong>
+                            <strong>
+                                <%= p.title %>
+                            </strong>
 
-</td>
+                        </td>
 
-<!-- Subject -->
 
-<td>
+                        <!-- Subject -->
 
-<%= p.subject %>
+                        <td>
+                            <%= p.subject %>
+                        </td>
 
-</td>
 
-<!-- Department -->
+                        <!-- Department -->
 
-<td>
+                        <td>
+                            <%= p.department %>
+                        </td>
 
-<%= p.department %>
 
-</td>
+                        <!-- Status -->
 
-<!-- Status -->
+                        <td>
 
-<td>
+                            <span class="badge
 
-<span class="badge
+                                <%= p.status === "APPROVED"
 
-<%= p.status==="APPROVED"
+                                    ? "badge-approved"
 
-? "badge-approved"
+                                    : p.status === "UNDER_REVIEW"
 
-: p.status==="UNDER_REVIEW"
+                                    ? "badge-review"
 
-? "badge-review"
+                                    : p.status === "NEEDS_CORRECTION"
 
-: p.status==="NEEDS_CORRECTION"
+                                    ? "badge-correction"
 
-? "badge-correction"
+                                    : "badge-draft"
 
-: "badge-draft"
+                                %>">
 
-%>">
+                                <%= p.status.replaceAll("_", " ") %>
 
-<%= p.status.replaceAll("_"," ") %>
+                            </span>
 
-</span>
+                        </td>
 
-</td>
 
-<!-- Uploaded -->
+                        <!-- Uploaded -->
 
-<td>
+                        <td>
+                            <%= p.uploadedBy?.name || "N/A" %>
+                        </td>
 
-<%= p.uploadedBy?.name || "N/A" %>
 
-</td>
+                        <!-- Reviewed -->
 
-<!-- Reviewed -->
+                        <td>
+                            <%= p.reviewedBy?.name || "N/A" %>
+                        </td>
 
-<td>
 
-<%= p.reviewedBy?.name || "N/A" %>
+                        <!-- ================= LAST VIEWED ================= -->
 
-</td>
+                        <td>
 
-<!-- Last Viewed -->
+                            <%= p.lastViewedAt
 
-<td>
+                                ? new Date(p.lastViewedAt).toLocaleString(
+                                    "en-IN",
+                                    {
+                                        timeZone: "Asia/Kolkata",
+                                        dateStyle: "medium",
+                                        timeStyle: "short"
+                                    }
+                                )
 
-<%= p.lastViewedAt
+                                : "Never"
 
-? new Date(p.lastViewedAt).toLocaleString("en-IN",{
+                            %>
 
-dateStyle:"medium",
+                        </td>
 
-timeStyle:"short"
 
-})
+                        <!-- ================= CREATED ================= -->
 
-: "Never"
+                        <td>
 
-%>
+                            <%= p.createdAt
 
-</td>
+                                ? new Date(p.createdAt).toLocaleDateString(
+                                    "en-IN",
+                                    {
+                                        timeZone: "Asia/Kolkata"
+                                    }
+                                )
 
-<!-- Created -->
+                                : "N/A"
 
-<td>
+                            %>
 
-<%= p.createdAt
+                        </td>
 
-? new Date(p.createdAt).toLocaleDateString("en-IN")
 
-: "N/A"
+                        <!-- ================= ACTIONS ================= -->
 
-%>
+                        <td>
 
-</td>
+                            <div class="paper-actions">
 
-<!-- Actions -->
+                                <% const now = new Date(); %>
 
-<td>
 
-<div class="paper-actions">
+                                <!-- ================= STUDENT ================= -->
 
-<% const now=new Date(); %>
+                                <% if (currentUser?.role === "Student") { %>
 
-<!-- ================= STUDENT ================= -->
+                                    <a
+                                        href="/papers/<%= p._id %>"
+                                        class="btn btn-view btn-sm"
+                                    >
 
-<% if(currentUser?.role==="Student"){ %>
+                                        <i class="fa-solid fa-eye me-1"></i>
 
-<a href="/papers/<%= p._id %>" class="btn btn-view btn-sm">
+                                        View
 
-<i class="fa-solid fa-eye me-1"></i>
+                                    </a>
 
-View
 
-</a>
+                                    <% if (
 
-<% if(
+                                        p.status === "APPROVED" &&
 
-p.status==="APPROVED"
+                                        p.startTime &&
 
-&& p.startTime
+                                        p.endTime &&
 
-&& p.endTime
+                                        now >= new Date(p.startTime) &&
 
-&& now>=p.startTime
+                                        now <= new Date(p.endTime)
 
-&& now<=p.endTime
+                                    ) { %>
 
-){ %>
+                                        <a
+                                            href="/exam/<%= p._id %>/token"
+                                            class="btn btn-success btn-sm"
+                                        >
 
-<a href="/exam/<%= p._id %>/token"
+                                            <i class="fa-solid fa-key me-1"></i>
 
-class="btn btn-success btn-sm">
+                                            Token
 
-<i class="fa-solid fa-key me-1"></i>
+                                        </a>
 
-Token
+                                    <% } else { %>
 
-</a>
+                                        <button
+                                            class="btn btn-secondary btn-sm"
+                                            disabled
+                                        >
 
-<% }else{ %>
+                                            Unavailable
 
-<button class="btn btn-secondary btn-sm" disabled>
+                                        </button>
 
-Unavailable
+                                    <% } %>
 
-</button>
+                                <% } %>
 
-<% } %>
 
-<% } %>
+                                <!-- ================= ADMIN / TEACHER ================= -->
 
-<!-- ================= ADMIN / TEACHER ================= -->
+                                <% if (
+                                    currentUser?.role === "Admin" ||
+                                    currentUser?.role === "Teacher"
+                                ) { %>
 
-<% if(currentUser?.role==="Admin" || currentUser?.role==="Teacher"){ %>
 
-<a href="/papers/<%= p._id %>"
-   class="btn btn-view btn-sm">
+                                    <a
+                                        href="/papers/<%= p._id %>"
+                                        class="btn btn-view btn-sm"
+                                    >
 
-    <i class="fa-solid fa-eye me-1"></i>
+                                        <i class="fa-solid fa-eye me-1"></i>
 
-    View
+                                        View
 
-</a>
+                                    </a>
 
-<a href="/papers/<%= p._id %>/edit"
-   class="btn btn-edit btn-sm">
 
-    <i class="fa-solid fa-pen-to-square me-1"></i>
+                                    <a
+                                        href="/papers/<%= p._id %>/edit"
+                                        class="btn btn-edit btn-sm"
+                                    >
 
-    Edit
+                                        <i class="fa-solid fa-pen-to-square me-1"></i>
 
-</a>
+                                        Edit
 
-<form
-    action="/papers/<%= p._id %>?_method=DELETE"
-    method="POST"
-    class="d-inline">
+                                    </a>
 
-    <button
-        class="btn btn-delete btn-sm"
-        onclick="return confirm('Delete this paper?')">
 
-        <i class="fa-solid fa-trash me-1"></i>
+                                    <form
+                                        action="/papers/<%= p._id %>?_method=DELETE"
+                                        method="POST"
+                                        class="d-inline"
+                                    >
 
-        Delete
+                                        <button
+                                            class="btn btn-delete btn-sm"
+                                            onclick="return confirm('Delete this paper?')"
+                                        >
 
-    </button>
+                                            <i class="fa-solid fa-trash me-1"></i>
 
-</form>
+                                            Delete
 
-<% } %>
+                                        </button>
+
+                                    </form>
+
+                                <% } %>
+
+                            </div>
+
+                        </td>
+
+                    </tr>
+
+                <% }) %>
+
+            </tbody>
+
+        </table>
+
+    </div>
 
 </div>
 
-</td>
-
-</tr>
-
-<% }) %>
-
-</tbody>
-
-</table>
-
-</div>
-
-</div>

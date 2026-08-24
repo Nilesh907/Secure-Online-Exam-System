@@ -20,7 +20,7 @@ const deviceFingerprint = require("./middleware/fingerprint");
 // ================= DB =================
 
 mongoose.connect(process.env.MONGO_URL, {
-  maxPoolSize: 50,
+  maxPoolSize: 10,
   serverSelectionTimeoutMS: 5000,
   socketTimeoutMS: 45000
 })

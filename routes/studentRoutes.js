@@ -18,13 +18,13 @@ router.get("/:id", checkRole(["Admin", "Teacher"]), studentController.showStuden
 router.get("/:id/edit", checkRole(["Admin"]), studentController.editForm);
 router.put("/:id", checkRole(["Admin"]), studentController.updateStudent);
 
-// ================= STUDENT PAPER ACCESS (MOVE TO BOTTOM) =================
-// IMPORTANT: keep wildcard routes LAST
-router.get(
-    "/paper/:paperId",
-    checkRole(["Student"]),
-    studentController.getPaper
-);
+// ================= STUDENT PAPER ACCESS =================
+// REMOVED: GET /paper/:paperId (studentController.getPaper).
+// This duplicated exam-paper decryption outside the protected
+// /exam/:paperId/* flow (no token/session/device/watermark checks,
+// and used the wrong decryption key/signature). Students must access
+// exam papers exclusively through examController.getExam, which
+// enforces all of those checks correctly. See security audit P0-4.
 
 module.exports = router;
 

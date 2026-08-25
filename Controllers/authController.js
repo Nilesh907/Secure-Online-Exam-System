@@ -94,7 +94,8 @@ exports.login = async (req, res) => {
 
         if (!user) {
 
-            return res.send("Invalid email");
+            // Generic message: don't reveal whether the email is registered
+            return res.send("Invalid email or password");
         }
 
         // ACCOUNT LOCK CHECK
@@ -138,7 +139,7 @@ exports.login = async (req, res) => {
             await user.save();
 
             return res.send(
-                "Invalid password"
+                "Invalid email or password"
             );
         }
 
@@ -151,14 +152,8 @@ exports.login = async (req, res) => {
 
         await user.save();
 
-        // SESSION SETUP
-        req.session.userId = user._id;
-
-        req.session.role = user.role;
-
-        req.session.name = user.name;
-
-        // LOGIN HISTORY
+        // LOGIN HISTORY (create before regenerating so we still have a
+        // valid session id to log against; not identity-sensitive data)
         const history =
             await History.create({
 
@@ -170,16 +165,35 @@ exports.login = async (req, res) => {
                     ]
             });
 
-        req.session.historyId =
-            history._id;
+        // REGENERATE SESSION (prevents session fixation: a pre-login
+        // session id, e.g. one an attacker planted, is invalidated and
+        // a fresh id is issued before we attach identity to it)
+        req.session.regenerate((regenErr) => {
+
+            if (regenErr) {
+                console.log(regenErr);
+                return res.send("Login error");
+            }
+
+            // SESSION SETUP
+            req.session.userId = user._id;
+
+            req.session.role = user.role;
+
+            req.session.name = user.name;
+
+            req.session.historyId =
+                history._id;
 
         // SAVE SESSION
         req.session.save(() => {
 
-            console.log(
-                "SESSION SAVED:",
-                req.session
-            );
+            if (process.env.NODE_ENV !== "production") {
+                console.log(
+                    "SESSION SAVED for user:",
+                    user._id.toString()
+                );
+            }
 
             // ROLE REDIRECTS
             if (
@@ -220,6 +234,8 @@ exports.login = async (req, res) => {
 
             res.redirect("/");
         });
+
+        }); // end req.session.regenerate
 
     } catch (err) {
 

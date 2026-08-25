@@ -123,47 +123,8 @@ module.exports.deleteStudent = async (req, res) => {
     }
 };
 
-/* ================= GET PAPER ================= */
-module.exports.getPaper = async (req, res) => {
-    try {
-        const studentId = req.session.userId;
-        if (!studentId) return res.status(401).send("Not logged in");
-
-        const paperId = req.params.paperId;
-        const paper = await Paper.findById(paperId);
-        if (!paper) return res.status(404).send("Paper not found");
-
-        
-        const encryptedPath = paper.encryptedFilePath;
-        const iv = Buffer.from(paper.iv, "hex");
-
-        if (!fs.existsSync(encryptedPath)) {
-            return res.status(404).send("Encrypted file missing");
-        }
-
-        const decryptedPath = path.join(
-            __dirname,
-            "..",
-            "uploads",
-            "temp",
-            `${paper._id}_${studentId}.pdf`
-        );
-
-        fs.mkdirSync(path.dirname(decryptedPath), { recursive: true });
-
-        
-        await decryptFile(encryptedPath, decryptedPath, process.env.MASTER_SECRET, iv);
-
-        res.download(decryptedPath, paper.title + ".pdf", (err) => {
-            if (err) console.error(err);
-            fs.unlinkSync(decryptedPath);
-        });
-
-    } catch (err) {
-        console.error("Student getPaper error:", err);
-        res.status(500).send("Failed to fetch paper");
-    }
-};
+// getPaper removed — see security audit P0-4. Students access exam
+// papers exclusively via /exam/:paperId/stream (examController.getExam).
 
 
 

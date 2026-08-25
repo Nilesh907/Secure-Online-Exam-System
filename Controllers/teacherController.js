@@ -30,9 +30,20 @@ module.exports.createTeacher = async (req, res) => {
   }
 };
 
+// Only Admin, or the teacher viewing/editing their own record. Prevents
+// one Teacher from reading/editing/deleting a colleague's account.
+function isSelfOrAdmin(req, teacher) {
+  if (req.session.role === "Admin") return true;
+  return String(teacher.user?._id || teacher.user) === String(req.session.userId);
+}
+
 module.exports.showTeacher = async (req, res) => {
   try {
     const teacher = await Teacher.findById(req.params.id).populate("user");
+    if (!teacher) return res.status(404).send("Teacher not found");
+    if (!isSelfOrAdmin(req, teacher)) {
+      return res.status(403).send("Not authorized");
+    }
     res.render("teacher/show.ejs", { teacher });
   } catch (err) {
     console.log("err fetching in show teacher", err);  
@@ -42,7 +53,11 @@ module.exports.showTeacher = async (req, res) => {
 module.exports.editForm = async (req, res) => {
   try {
     const { id } = req.params;
-    const teacher = await Teacher.findById(id);
+    const teacher = await Teacher.findById(id).populate("user");
+    if (!teacher) return res.status(404).send("Teacher not found");
+    if (!isSelfOrAdmin(req, teacher)) {
+      return res.status(403).send("Not authorized");
+    }
     res.render("teacher/edit.ejs", { teacher });
   } catch (err) {
     console.log("err fetching in edit form", err);
@@ -52,6 +67,11 @@ module.exports.editForm = async (req, res) => {
 module.exports.updateTeacher = async (req, res) => {
   try {
     const { id } = req.params;
+    const teacher = await Teacher.findById(id).populate("user");
+    if (!teacher) return res.status(404).send("Teacher not found");
+    if (!isSelfOrAdmin(req, teacher)) {
+      return res.status(403).send("Not authorized");
+    }
     await Teacher.findByIdAndUpdate(id, req.body.teacher);
     res.redirect("/teachers");
   } catch (err) {
@@ -61,6 +81,11 @@ module.exports.updateTeacher = async (req, res) => {
 
 module.exports.deleteTeacher = async (req, res) => {
   try {
+    const teacher = await Teacher.findById(req.params.id).populate("user");
+    if (!teacher) return res.status(404).send("Teacher not found");
+    if (!isSelfOrAdmin(req, teacher)) {
+      return res.status(403).send("Not authorized");
+    }
     await Teacher.findByIdAndDelete(req.params.id);
     res.redirect("/teachers");
   } catch (err) {

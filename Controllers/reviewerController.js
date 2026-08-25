@@ -35,9 +35,19 @@ module.exports.createReviewer = async (req, res) => {
   }
 };
 
+// Only Admin, or the reviewer viewing/editing their own record.
+function isSelfOrAdmin(req, reviewer) {
+  if (req.session.role === "Admin") return true;
+  return String(reviewer.user?._id || reviewer.user) === String(req.session.userId);
+}
+
 module.exports.showReviewer = async (req, res) => {
   try {
     const reviewer = await Reviewer.findById(req.params.id).populate("user");
+    if (!reviewer) return res.status(404).send("Reviewer not found");
+    if (!isSelfOrAdmin(req, reviewer)) {
+      return res.status(403).send("Not authorized");
+    }
     res.render("reviewer/show.ejs", { reviewer });
   } catch (err) {
     console.log("err fetching in show", err);
@@ -47,7 +57,11 @@ module.exports.showReviewer = async (req, res) => {
 module.exports.editForm = async (req, res) => {
   try {
     const { id } = req.params;
-    const reviewer = await Reviewer.findById(id);
+    const reviewer = await Reviewer.findById(id).populate("user");
+    if (!reviewer) return res.status(404).send("Reviewer not found");
+    if (!isSelfOrAdmin(req, reviewer)) {
+      return res.status(403).send("Not authorized");
+    }
     res.render("reviewer/edit.ejs", { reviewer });
   } catch (err) {
     console.log("err fetching in edit", err);
@@ -57,6 +71,12 @@ module.exports.editForm = async (req, res) => {
 module.exports.updateReviewer = async (req, res) => {
   try {
     const { id } = req.params;
+
+    const reviewer = await Reviewer.findById(id).populate("user");
+    if (!reviewer) return res.status(404).send("Reviewer not found");
+    if (!isSelfOrAdmin(req, reviewer)) {
+      return res.status(403).send("Not authorized");
+    }
 
     await Reviewer.findByIdAndUpdate(
       id,
@@ -72,6 +92,11 @@ module.exports.updateReviewer = async (req, res) => {
 
 module.exports.deleteReviewer = async (req, res) => {
   try {
+    const reviewer = await Reviewer.findById(req.params.id).populate("user");
+    if (!reviewer) return res.status(404).send("Reviewer not found");
+    if (!isSelfOrAdmin(req, reviewer)) {
+      return res.status(403).send("Not authorized");
+    }
     await Reviewer.findByIdAndDelete(req.params.id);
     res.redirect("/reviewers");
   } catch (err) {

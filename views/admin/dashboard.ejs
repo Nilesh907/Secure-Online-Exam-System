@@ -440,11 +440,18 @@
 
 window.dashboardData = {
 
-    studentNames: <%- JSON.stringify(studentNames) %>,
+    <%
+    // Escape "<" (as \u003c) so a student name like "</script><script>..."
+    // can't break out of this inline <script> block. JSON.stringify alone
+    // escapes quotes/backslashes but NOT the </script> sequence.
+    const safeJSON = (val) => JSON.stringify(val).replace(/</g, "\\u003c");
+    %>
 
-    riskScores: <%- JSON.stringify(riskScores) %>,
+    studentNames: <%- safeJSON(studentNames) %>,
 
-    threatCounts: <%- JSON.stringify(threatCounts) %>
+    riskScores: <%- safeJSON(riskScores) %>,
+
+    threatCounts: <%- safeJSON(threatCounts) %>
 
 };
 

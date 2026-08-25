@@ -9,11 +9,13 @@ exports.isLoggedIn = (req, res, next) => {
 exports.checkRole = (allowedRoles) => {
     return (req, res, next) => {
 
-        console.log("===== ROLE DEBUG =====");
-        console.log("Session UserId:", req.session.userId);
-        console.log("Session Role:", req.session.role);
-        console.log("Allowed Roles:", allowedRoles);
-        console.log("======================");
+        if (process.env.NODE_ENV !== "production") {
+            console.log("===== ROLE DEBUG =====");
+            console.log("Session UserId:", req.session.userId);
+            console.log("Session Role:", req.session.role);
+            console.log("Allowed Roles:", allowedRoles);
+            console.log("======================");
+        }
 
         if (!req.session.userId) {
             return res.send("Please login first");

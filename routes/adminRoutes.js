@@ -44,6 +44,7 @@ router.get(
 
 router.get(
     "/report/:id",
+    ensureAdmin,
     adminController.viewReport
 );
 

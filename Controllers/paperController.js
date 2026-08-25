@@ -12,7 +12,38 @@ const ExamSession = require("../models/ExamSession.js");
 const crypto = require("crypto");
 const AuditLog = require("../models/AuditLog");
 
+// ================= AUTHORIZATION HELPERS =================
+// Single source of truth for "who can see/open this paper" so showPaper
+// and viewPaper can't drift out of sync with each other or with index().
 
+function canViewPaperMeta(session, paper) {
+    if (session.role === "Admin") return true;
+    if (session.role === "Teacher") {
+        return String(paper.uploadedBy?._id || paper.uploadedBy) === String(session.userId);
+    }
+    if (session.role === "Reviewer") {
+        return (
+            paper.status === "UNDER_REVIEW" ||
+            String(paper.reviewedBy?._id || paper.reviewedBy) === String(session.userId)
+        );
+    }
+    if (session.role === "Student") {
+        // Students may only ever see papers that are visible in their /papers index
+        return ["SCHEDULED", "ACTIVE"].includes(paper.status);
+    }
+    return false;
+}
+
+// Deliberately stricter than canViewPaperMeta: this gates the endpoint that
+// DECRYPTS and serves the actual exam PDF. Students must never take this
+// path — their only route to the decrypted, watermarked file is the
+// dedicated /exam/:paperId/stream flow (examController.getExam), which
+// enforces token/session/device binding and watermarking. If a Student
+// role reaches here, deny outright rather than reusing the metadata rule.
+function canViewPaperFile(session, paper) {
+    if (session.role === "Student") return false;
+    return canViewPaperMeta(session, paper);
+}
 
 //GET ALL  PAPERS  /papers
 // ====================== GET ALL PAPERS ======================
@@ -257,6 +288,14 @@ module.exports.uploadSuccess = async (req, res) => {
 
 module.exports.showPaper = async (req, res) => {
   try {
+    const paperCheck = await Paper.findById(req.params.id);
+    if (!paperCheck) {
+      return res.redirect("/papers");
+    }
+    if (!canViewPaperMeta(req.session, paperCheck)) {
+      return res.status(403).send("Not authorized to view this paper");
+    }
+
     const paper = await Paper.findByIdAndUpdate(
       req.params.id,
       {
@@ -355,16 +394,26 @@ module.exports.viewPaper = async (req, res) => {
 
         const paper = await Paper.findById(req.params.id);
 
+        if (!paper) {
+            return res.send("Paper not found");
+        }
+
+        if (!canViewPaperFile(req.session, paper)) {
+            await AuditLog.create({
+                user: req.session.userId,
+                paper: paper._id,
+                action: "PAPER_VIEW_DENIED",
+                details: `Unauthorized access attempt by role ${req.session.role}`
+            });
+            return res.status(403).send("Not authorized to view this paper");
+        }
+
         await AuditLog.create({
         user:req.session.userId,
         paper:paper._id,
         action:"PAPER_VIEWED",
         details:"Paper viewed"
     });
-
-        if (!paper) {
-            return res.send("Paper not found");
-        }
 
         const encryptedPath = path.resolve(
             paper.encryptedFilePath

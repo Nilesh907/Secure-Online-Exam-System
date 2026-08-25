@@ -13,15 +13,17 @@ module.exports = async (req, res, next) => {
             return res.status(403).send("No active exam session");
         }
 
-        // ================= DEBUG =================
-        console.log("\n===== EXAM SESSION DEBUG =====");
-        console.log("DB sessionId:", session.sessionId);
-        console.log("Client sessionId:", req.session.examSessionId);
-        console.log("DB deviceId:", session.deviceId);
-        console.log("Client deviceId:", req.deviceId);
-        console.log("Risk Score:", session.riskScore);
-        console.log("Suspended:", session.isSuspended);
-        console.log("==============================\n");
+        // ================= DEBUG (dev only) =================
+        if (process.env.NODE_ENV !== "production") {
+            console.log("\n===== EXAM SESSION DEBUG =====");
+            console.log("DB sessionId:", session.sessionId);
+            console.log("Client sessionId:", req.session.examSessionId);
+            console.log("DB deviceId:", session.deviceId);
+            console.log("Client deviceId:", req.deviceId);
+            console.log("Risk Score:", session.riskScore);
+            console.log("Suspended:", session.isSuspended);
+            console.log("==============================\n");
+        }
 
         // ================= BLOCK IF SUSPENDED =================
         if (session.isSuspended) {
